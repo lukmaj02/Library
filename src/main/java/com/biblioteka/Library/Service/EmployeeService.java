@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -22,8 +23,6 @@ public class EmployeeService {
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private EmployeeRepository employeeRepository;
-    @Autowired
-    private ModelMapper modelMapper;
 
     public List<Employee> getEmployee(){
         //return jdbcTemplate.query("select * from pracownik",BeanPropertyRowMapper.newInstance(Employee.class));
@@ -36,20 +35,19 @@ public class EmployeeService {
     }
 
     public void addEmployee(Employee employee) {
-
-//        jdbcTemplate.update("call addEmployee(?,?,?,?,?)",employeeRequest.getImie(), employeeRequest.getNazwisko(),
-//                employeeRequest.getWiek(),employeeRequest.getEmail(), employeeRequest.getTelefon());
+//        jdbcTemplate.update("call addEmployee(?,?,?,?,?)",employee.getImie(), employee.getNazwisko(),
+//                employee.getWiek(),employee.getEmail(), employee.getTelefon());
         employeeRepository.save(employee);
     }
 
     public void changeEmployee(Employee employee, Integer id) {
-        jdbcTemplate.update("call modifyEmployee(?,?,?,?,?,?)",id, employee.getImie(), employee.getNazwisko(),
-                employee.getWiek(),employee.getEmail(), employee.getTelefon());
+//        jdbcTemplate.update("call modifyEmployee(?,?,?,?,?,?)",id, employee.getImie(), employee.getNazwisko(),
+//                employee.getWiek(),employee.getEmail(), employee.getTelefon());
         employeeRepository.save(employee);
     }
 
     public void deleteEmployee(Integer id) {
-        getEmployee(id).orElseThrow(() -> new EmployeeNotFoundException(id));
-        jdbcTemplate.update("delete from pracownik where id=?", id);
+        //jdbcTemplate.update("delete from pracownik where id=?", id);
+        employeeRepository.deleteById(id);
     }
 }
