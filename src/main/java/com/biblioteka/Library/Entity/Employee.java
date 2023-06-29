@@ -8,7 +8,10 @@ import javax.management.ConstructorParameters;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@Table(name = "pracownik")
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
