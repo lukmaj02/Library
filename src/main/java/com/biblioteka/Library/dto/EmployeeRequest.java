@@ -9,7 +9,6 @@ import lombok.*;
 public class EmployeeRequest {
     private String imie;
     private String nazwisko;
-    private Integer wiek;
     private String email;
     private String telefon;
 }

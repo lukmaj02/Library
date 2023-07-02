@@ -4,11 +4,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-public interface IController<T>{
-     List<T> getAll();
-     T get(@PathVariable Integer id);
-     void add(@RequestBody T object);
-     void change(@PathVariable Integer id, @RequestBody T object);
+public interface IController<Request, Response>{
+     List<Response> getAll();
+     Response getById(@PathVariable Integer id);
+     void add(@RequestBody Request requestBody);
+     void changeById(@PathVariable Integer id, @RequestBody Request requestBody);
      void deleteById(@PathVariable Integer id);
 
 }

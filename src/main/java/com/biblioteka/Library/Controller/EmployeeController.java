@@ -4,9 +4,12 @@ import com.biblioteka.Library.Entity.Employee;
 import com.biblioteka.Library.Exceptions.EmployeeNotFoundException;
 import com.biblioteka.Library.Service.EmployeeService;
 import com.biblioteka.Library.dto.EmployeeRequest;
+import com.biblioteka.Library.dto.EmployeeResponse;
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -14,43 +17,44 @@ import java.util.List;
 
 @RestController
     @RequestMapping("/employee")
-    public class EmployeeController implements IController<EmployeeRequest> {
-        @Autowired
-        private EmployeeService employeeService;
+    public class EmployeeController implements IController<EmployeeRequest, EmployeeResponse> {
 
-        @Autowired
-        private ModelMapper modelMapper;
+    private final EmployeeService employeeService;
 
-        @Override
+    @Autowired
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
+
+    @Override
         @GetMapping("")
-        public List<EmployeeRequest> getAll(){
-            List<Employee> employees = employeeService.getEmployee();
-            return modelMapper.map(employees, new TypeToken<List<EmployeeRequest>>() {}.getType());
+        @ResponseStatus(HttpStatus.OK)
+        public List<EmployeeResponse> getAll(){
+            return employeeService.getEmployee();
         }
 
         @Override
         @GetMapping("/{id}")
-        public EmployeeRequest get(@PathVariable Integer id){
-            Employee employee = employeeService.getEmployee(id).orElseThrow(() -> new EmployeeNotFoundException(id));
-            return modelMapper.map(employee, EmployeeRequest.class);
+        @ResponseStatus(HttpStatus.OK)
+        public EmployeeResponse getById(@PathVariable Integer id){
+            return employeeService.getEmployee(id);
         }
         @Override
         @PostMapping()
+        @ResponseStatus(HttpStatus.CREATED)
         public void add(@RequestBody EmployeeRequest employeeRequest){
-            Employee employee = modelMapper.map(employeeRequest, Employee.class);
-            employeeService.addEmployee(employee);
+            employeeService.addEmployee(employeeRequest);
         }
-
+        @Override
         @PutMapping("/{id}")
-        public void change(@PathVariable Integer id, @RequestBody EmployeeRequest employeeRequest){
-            employeeService.getEmployee(id).orElseThrow(() -> new EmployeeNotFoundException(id));
-            Employee employee = modelMapper.map(employeeRequest, Employee.class);
-            employeeService.changeEmployee(employee, id);
+        @ResponseStatus(HttpStatus.ACCEPTED)
+        public void changeById(@PathVariable Integer id, @RequestBody EmployeeRequest employeeRequest){
+            employeeService.changeEmployee(employeeRequest, id);
         }
-
+        @Override
         @DeleteMapping("/{id}")
+        @ResponseStatus(HttpStatus.ACCEPTED)
         public void deleteById(@PathVariable Integer id){
-            employeeService.getEmployee(id).orElseThrow(() -> new EmployeeNotFoundException(id));
             employeeService.deleteEmployee(id);
         }
     }
