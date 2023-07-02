@@ -2,9 +2,7 @@ package com.biblioteka.Library.Entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.antlr.v4.runtime.misc.NotNull;
 
-import javax.management.ConstructorParameters;
 
 @Entity
 @Table(name = "pracownik")
@@ -16,17 +14,22 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String imie;
-    private String nazwisko;
-    private Integer wiek;
+    @Column(name = "name")
+    private String name;
+    @Column(name = "surname")
+    private String surname;
+    @Column(name = "age")
+    private Integer age;
+    @Column(name = "email")
     private String email;
-    private String telefon;
+    @Column(name ="phone_number")
+    private String phoneNumber;
 
-    public Employee(String imie, String nazwisko, Integer wiek, String email, String telefon) {
-        this.imie = imie;
-        this.nazwisko = nazwisko;
-        this.wiek = wiek;
+    public Employee(String name, String surname, Integer age, String email, String phoneNumber) {
+        this.name = name;
+        this.surname = surname;
+        this.age = age;
         this.email = email;
-        this.telefon = telefon;
+        this.phoneNumber = phoneNumber;
     }
 }

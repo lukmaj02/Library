@@ -10,5 +10,4 @@ public interface IController<Request, Response>{
      void add(@RequestBody Request requestBody);
      void changeById(@PathVariable Integer id, @RequestBody Request requestBody);
      void deleteById(@PathVariable Integer id);
-
 }

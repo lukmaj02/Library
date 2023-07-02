@@ -5,11 +5,20 @@ import com.biblioteka.Library.Exceptions.EmployeeNotFoundException;
 import com.biblioteka.Library.Repository.EmployeeRepository;
 import com.biblioteka.Library.dto.EmployeeRequest;
 import com.biblioteka.Library.dto.EmployeeResponse;
+import org.hibernate.boot.model.source.spi.EmbeddableMapping;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.modelmapper.internal.bytebuddy.description.method.MethodDescription;
+import org.modelmapper.internal.bytebuddy.description.type.TypeList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.lang.reflect.Type;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+
+import static java.util.Collections.singletonList;
 
 
 @Service
@@ -28,10 +37,11 @@ public class EmployeeService {
 
     public List<EmployeeResponse> getEmployee(){
         //return jdbcTemplate.query("select * from pracownik",BeanPropertyRowMapper.newInstance(Employee.class));
-        return modelMapper.map(employeeRepository.findAll(), new TypeToken<List<EmployeeResponse>>() {}.getType());
+        List<Employee> employees = employeeRepository.findAll();
+        return Arrays.asList(modelMapper.map(employees, EmployeeResponse[].class));
     }
 
-    public EmployeeResponse getEmployee(Integer id){
+    public EmployeeResponse getEmployeeById(Integer id){
         Employee employee = employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
         return modelMapper.map(employee, EmployeeResponse.class);
     }
@@ -47,10 +57,11 @@ public class EmployeeService {
 //        jdbcTemplate.update("call modifyEmployee(?,?,?,?,?,?)",id, employee.getImie(), employee.getNazwisko(),
 //                employee.getWiek(),employee.getEmail(), employee.getTelefon());
         Employee employee = employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
-        employee.setImie(employeeRequest.getImie());
-        employee.setNazwisko(employeeRequest.getNazwisko());
+        employee.setName(employeeRequest.getName());
+        employee.setSurname(employeeRequest.getSurname());
+        employee.setAge(employeeRequest.getAge());
         employee.setEmail(employeeRequest.getEmail());
-        employee.setTelefon(employeeRequest.getTelefon());
+        employee.setPhoneNumber(employeeRequest.getPhoneNumber());
         employeeRepository.save(employee);
     }
 
@@ -58,5 +69,10 @@ public class EmployeeService {
         //jdbcTemplate.update("delete from pracownik where id=?", id);
         Employee employee = employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
         employeeRepository.delete(employee);
+    }
+
+    public List<EmployeeResponse> getEmployeeByName(String name){
+        List<Employee> employees= employeeRepository.findByName(name);
+        return Arrays.asList(modelMapper.map(employees, EmployeeResponse[].class));
     }
 }

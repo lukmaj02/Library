@@ -11,8 +11,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class EmployeeRequest {
-    private String imie;
-    private String nazwisko;
+    private String name;
+    private String surname;
     private String email;
-    private String telefon;
+    private Integer age;
+    private String phoneNumber;
 }

@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class EmployeeResponse {
-    private String imie;
-    private String nazwisko;
+    private String name;
+    private String surname;
     private String email;
 }
