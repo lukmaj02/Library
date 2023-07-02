@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
-
-@RestController
+    @RestController
     @RequestMapping("/employee")
     public class EmployeeController implements IController<EmployeeRequest, EmployeeResponse> {
 
@@ -26,7 +25,7 @@ import java.util.List;
         this.employeeService = employeeService;
     }
 
-    @Override
+        @Override
         @GetMapping("")
         @ResponseStatus(HttpStatus.OK)
         public List<EmployeeResponse> getAll(){
