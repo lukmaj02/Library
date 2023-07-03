@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/employee")
-public class EmployeeController implements IController<EmployeeRequest, EmployeeResponse> {
+public class EmployeeController implements IController<EmployeeRequest, EmployeeResponse, Integer> {
 
     private final EmployeeService employeeService;
 
