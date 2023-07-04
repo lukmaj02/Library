@@ -12,7 +12,7 @@ import java.awt.print.Book;
 import java.util.List;
 @RestController
 @RequestMapping("/book")
-public class BookController implements IController<BookRequest, BookResponse, String>{
+public class BookController implements IController<BookRequest, BookResponse, Integer>{
 
     private final BookService bookService;
 
@@ -31,9 +31,10 @@ public class BookController implements IController<BookRequest, BookResponse, St
     @Override
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public BookResponse getById(@PathVariable String id) {
+    public BookResponse getById(@PathVariable Integer id) {
         return bookService.getBook(id);
     }
+
 
     @Override
     @PostMapping("")
@@ -45,14 +46,14 @@ public class BookController implements IController<BookRequest, BookResponse, St
     @Override
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void changeById(@PathVariable String id, @RequestBody BookRequest requestBody) {
+    public void changeById(@PathVariable Integer id, @RequestBody BookRequest requestBody) {
         bookService.changeBook(id, requestBody);
     }
 
     @Override
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void deleteById(String id) {
+    public void deleteById(Integer id) {
         bookService.deleteBook(id);
     }
 }

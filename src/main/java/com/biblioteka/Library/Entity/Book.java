@@ -1,10 +1,12 @@
 package com.biblioteka.Library.Entity;
 
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.antlr.v4.runtime.misc.NotNull;
 
 import java.time.LocalDate;
 
@@ -16,16 +18,12 @@ import java.time.LocalDate;
 @Table(name = "book")
 public class Book {
     @Id
-    private String ISBN;
+    @GeneratedValue
+    private Integer id;
     private String title;
-    @Column(name = "author_name")
-    private String authorName;
-    @Column(name = "author_last_name")
-    private String authorLastName;
     @Column(name = "publication_date")
     private Integer publicationDate;
-    private Integer quantity;
-    private Double price;
-    @Column(name = "lang")
-    private String language;
+    @Column(name ="author_id", nullable = false)
+    private Integer authorId;
+    private String ISBN;
 }
