@@ -11,12 +11,11 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-
 import java.util.List;
-    @RestController
-    @RequestMapping("/employee")
-    public class EmployeeController implements IController<EmployeeRequest, EmployeeResponse> {
+
+@RestController
+@RequestMapping("/employee")
+public class EmployeeController implements IController<EmployeeRequest, EmployeeResponse, Integer> {
 
     private final EmployeeService employeeService;
 
@@ -25,36 +24,41 @@ import java.util.List;
         this.employeeService = employeeService;
     }
 
-        @Override
-        @GetMapping("")
-        @ResponseStatus(HttpStatus.OK)
-        public List<EmployeeResponse> getAll(){
-            return employeeService.getEmployee();
-        }
-
-        @Override
-        @GetMapping("/{id}")
-        @ResponseStatus(HttpStatus.OK)
-        public EmployeeResponse getById(@PathVariable Integer id){
-            return employeeService.getEmployee(id);
-        }
-        @Override
-        @PostMapping()
-        @ResponseStatus(HttpStatus.CREATED)
-        public void add(@RequestBody EmployeeRequest employeeRequest){
-            employeeService.addEmployee(employeeRequest);
-        }
-        @Override
-        @PutMapping("/{id}")
-        @ResponseStatus(HttpStatus.ACCEPTED)
-        public void changeById(@PathVariable Integer id, @RequestBody EmployeeRequest employeeRequest){
-            employeeService.changeEmployee(employeeRequest, id);
-        }
-        @Override
-        @DeleteMapping("/{id}")
-        @ResponseStatus(HttpStatus.ACCEPTED)
-        public void deleteById(@PathVariable Integer id){
-            employeeService.deleteEmployee(id);
-        }
+    @Override
+    @GetMapping("")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public List<EmployeeResponse> getAll() {
+        return employeeService.getEmployee();
     }
+    @Override
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public EmployeeResponse getById(@PathVariable Integer id){
+        return employeeService.getEmployeeById(id);
+    }
+    @Override
+    @PostMapping("")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void add(@RequestBody EmployeeRequest employeeRequest){
+        employeeService.addEmployee(employeeRequest);
+    }
+
+    @Override
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void changeById(@PathVariable Integer id, @RequestBody EmployeeRequest employeeRequest){
+        employeeService.changeEmployee(employeeRequest, id);
+    }
+    @Override @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void deleteById(@PathVariable Integer id){
+        employeeService.deleteEmployee(id);
+    }
+
+    @GetMapping("/name/{name}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public List<EmployeeResponse> getByName(@PathVariable String name) {
+        return employeeService.getEmployeeByName(name);
+    }
+}
 

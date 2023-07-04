@@ -1,18 +1,15 @@
 package com.biblioteka.Library.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+@Data
 public class EmployeeRequest {
-    private String imie;
-    private String nazwisko;
+    private String name;
+    private String surname;
     private String email;
-    private String telefon;
+    private Integer age;
+    private String phoneNumber;
 }
