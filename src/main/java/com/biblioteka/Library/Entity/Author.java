@@ -1,16 +1,15 @@
 package com.biblioteka.Library.Entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 @Table(name ="author")
 public class Author {
@@ -20,7 +19,7 @@ public class Author {
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
-    private String lastname;
+    private String lastName;
 
     @OneToMany
     @JoinColumn(name = "Book_id", referencedColumnName = "id")
