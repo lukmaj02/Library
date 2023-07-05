@@ -39,15 +39,15 @@ public class BookController implements IController<BookRequest, BookResponse, In
     @Override
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public void add(@RequestBody BookRequest requestBody) {
-        bookService.addBook(requestBody);
+    public void add(@RequestBody BookRequest bookRequest) {
+        bookService.addBook(bookRequest);
     }
 
     @Override
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void changeById(@PathVariable Integer id, @RequestBody BookRequest requestBody) {
-        bookService.changeBook(id, requestBody);
+    public void changeById(@PathVariable Integer id, @RequestBody BookRequest bookRequest) {
+        bookService.changeBook(id, bookRequest);
     }
 
     @Override

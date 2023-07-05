@@ -8,5 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookRequest {
+    private String ISBN;
     private String title;
+    private Integer publicationDate;
+    private String authorFirstName;
+    private String authorLastName;
 }
