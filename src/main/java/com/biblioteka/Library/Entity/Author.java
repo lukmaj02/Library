@@ -1,5 +1,7 @@
 package com.biblioteka.Library.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,13 +17,14 @@ import java.util.List;
 public class Author {
     @Id
     @GeneratedValue
+    @JsonIgnore
     private Integer id;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
 
-    @OneToMany
-    @JoinColumn(name = "Book_id", referencedColumnName = "id")
+    @JsonIgnore
+    @OneToMany(mappedBy = "author")
     private List<Book> books;
 }

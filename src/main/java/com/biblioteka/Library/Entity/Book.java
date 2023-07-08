@@ -1,5 +1,6 @@
 package com.biblioteka.Library.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.*;
@@ -21,7 +22,10 @@ public class Book {
     private String title;
     @Column(name = "publication_date")
     private Integer publicationDate;
-    @Column(name ="author_id", nullable = false)
-    private Integer authorId;
     private String ISBN;
+
+    @OneToOne
+    @JoinColumn(name = "author_id", referencedColumnName = "id")
+    @JsonBackReference
+    private Author author;
 }
