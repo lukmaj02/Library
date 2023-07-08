@@ -1,8 +1,7 @@
 package com.biblioteka.Library.Controller;
 
+import com.biblioteka.Library.Entity.Author;
 import com.biblioteka.Library.Service.AuthorService;
-import com.biblioteka.Library.dto.AuthorRequest;
-import com.biblioteka.Library.dto.AuthorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/author")
-public class AuthorController implements IController<AuthorRequest, AuthorResponse, Integer> {
+public class AuthorController {
 
     private final AuthorService authorService;
     @Autowired
@@ -19,31 +18,26 @@ public class AuthorController implements IController<AuthorRequest, AuthorRespon
         this.authorService = authorService;
     }
     @GetMapping("")
-    @ResponseStatus(HttpStatus.OK)
-    @Override
-    public List<AuthorResponse> getAll() {
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public List<Author> getAll() {
         return authorService.getAllAuthors();
     }
     @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    @Override
-    public AuthorResponse getById(@PathVariable Integer id) {
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Author getById(@PathVariable Integer id) {
         return authorService.getAuthorById(id);
     }
 
-    @Override
     @PutMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public void add(AuthorRequest authorRequest) {
-        authorService.addAuthor(authorRequest);
+    public void add(Author author) {
+        authorService.addAuthor(author);
     }
 
-    @Override
-    public void changeById(Integer integer, AuthorRequest requestBody) {
+    public void changeById(Integer integer, Author requestBody) {
 
     }
 
-    @Override
     public void deleteById(Integer integer) {
 
     }
