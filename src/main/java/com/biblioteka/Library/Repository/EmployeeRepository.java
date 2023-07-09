@@ -13,6 +13,5 @@ import java.util.OptionalInt;
 public interface EmployeeRepository extends JpaRepository<Employee, Integer>{
 
     List<Employee> findByName(String name);
-
 }
 

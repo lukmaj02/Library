@@ -22,7 +22,7 @@ public class Book {
     private String title;
     @Column(name = "publication_date")
     private Integer publicationDate;
-    private String ISBN;
+    private String isbn;
 
     @OneToOne
     @JoinColumn(name = "author_id", referencedColumnName = "id")

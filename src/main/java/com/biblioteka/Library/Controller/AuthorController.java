@@ -28,17 +28,19 @@ public class AuthorController {
         return authorService.getAuthorById(id);
     }
 
-    @PutMapping("")
+    @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public void add(Author author) {
+    public void add(@RequestBody Author author) {
         authorService.addAuthor(author);
     }
-
-    public void changeById(Integer integer, Author requestBody) {
-
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void changeById(@PathVariable Integer id, @RequestBody Author author) {
+        authorService.changeById(id, author);
     }
-
-    public void deleteById(Integer integer) {
-
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void deleteById(@PathVariable Integer id) {
+        authorService.deleteById(id);
     }
 }
