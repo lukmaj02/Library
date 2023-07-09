@@ -1,7 +1,7 @@
 package com.biblioteka.Library.Exceptions;
 
-public class BookExistsException extends RuntimeException{
-    public BookExistsException(String ISBN){
+public class BookExistingException extends RuntimeException{
+    public BookExistingException(String ISBN){
         super("Book with ISBN=" + ISBN +" already exists!");
     }
 }

@@ -1,6 +1,5 @@
 package com.biblioteka.Library.dto;
 
-import com.biblioteka.Library.Entity.Author;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,9 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class BookResponse {
-    private String isbn;
-    private String title;
-    private Integer publicationDate;
-    private Author author;
+public class AuthorResponse {
+    private String firstName;
+    private String lastName;
 }

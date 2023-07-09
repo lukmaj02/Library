@@ -1,7 +1,7 @@
 package com.biblioteka.Library.Service;
 
 import com.biblioteka.Library.Entity.Book;
-import com.biblioteka.Library.Exceptions.BookExistsException;
+import com.biblioteka.Library.Exceptions.BookExistingException;
 import com.biblioteka.Library.Exceptions.BookNotFoundException;
 import com.biblioteka.Library.Repository.AuthorRepository;
 import com.biblioteka.Library.Repository.BookRepository;
@@ -34,13 +34,13 @@ public class BookService {
     }
 
     public BookResponse getBook(Integer id) {
-        Book book = bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException("for now"));
+        Book book = bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
         return modelMapper.map(book, BookResponse.class);
     }
 
     public void addBook(BookRequest bookRequest) { //todo
-        if(bookRepository.existsByISBN(bookRequest.getISBN())){
-            throw new BookExistsException(bookRequest.getISBN());
+        if(bookRepository.existsByIsbn(bookRequest.getIsbn())){
+            throw new BookExistingException(bookRequest.getIsbn());
         }
         if(!authorService.existsAuthor(bookRequest.getAuthor())){
             authorService.addAuthor(bookRequest.getAuthor());
@@ -49,10 +49,11 @@ public class BookService {
     }
 
     public void changeBook(Integer id, BookRequest bookRequest) {
-        Book book = bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException("a"));
+        Book book = bookRepository.findById(id).orElseThrow(BookNotFoundException::new);
     }
 
     public void deleteBook(Integer id) {
-
+        Book book = bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
+        bookRepository.delete(book);
     }
 }

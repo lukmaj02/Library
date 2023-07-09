@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookRequest {
-    private String ISBN;
+    private String isbn;
     private String title;
     private Integer publicationDate;
     private Author author;
