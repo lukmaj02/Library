@@ -13,8 +13,6 @@ import java.util.List;
 
 @Service
 public class EmployeeService {
-//    @Autowired
-//    private JdbcTemplate jdbcTemplate;
 
     private final EmployeeRepository employeeRepository;
     private final ModelMapper modelMapper;
@@ -26,7 +24,6 @@ public class EmployeeService {
     }
 
     public List<EmployeeResponse> getEmployee(){
-        //return jdbcTemplate.query("select * from pracownik",BeanPropertyRowMapper.newInstance(Employee.class));
         List<Employee> employees = employeeRepository.findAll();
         return Arrays.asList(modelMapper.map(employees, EmployeeResponse[].class));
     }
@@ -37,26 +34,21 @@ public class EmployeeService {
     }
 
     public void addEmployee(EmployeeRequest employeeRequest) {
-//        jdbcTemplate.update("call addEmployee(?,?,?,?,?)",employee.getImie(), employee.getNazwisko(),
-//                employee.getWiek(),employee.getEmail(), employee.getTelefon());
         Employee employee = modelMapper.map(employeeRequest, Employee.class);
         employeeRepository.save(employee);
     }
 
     public void changeEmployee(EmployeeRequest employeeRequest, Integer id) {
-//        jdbcTemplate.update("call modifyEmployee(?,?,?,?,?,?)",id, employee.getImie(), employee.getNazwisko(),
-//                employee.getWiek(),employee.getEmail(), employee.getTelefon());
         Employee employee = employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
         employee.setName(employeeRequest.getName());
         employee.setSurname(employeeRequest.getSurname());
-        employee.setAge(employeeRequest.getAge());
+        employee.setDate(employeeRequest.getDate());
         employee.setEmail(employeeRequest.getEmail());
         employee.setPhoneNumber(employeeRequest.getPhoneNumber());
         employeeRepository.save(employee);
     }
 
     public void deleteEmployee(Integer id) {
-        //jdbcTemplate.update("delete from pracownik where id=?", id);
         Employee employee = employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
         employeeRepository.delete(employee);
     }

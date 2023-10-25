@@ -2,7 +2,9 @@ package com.biblioteka.Library.Entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.cglib.core.Local;
 
+import java.time.LocalDate;
 
 
 @Getter
@@ -18,16 +20,10 @@ public class Employee {
     private Integer id;
     private String name;
     private String surname;
-    private Integer age;
+    private LocalDate date;
     private String email;
+    private String password;
     @Column(name ="phone_number")
     private String phoneNumber;
 
-    public Employee(String name, String surname, Integer age, String email, String phoneNumber) {
-        this.name = name;
-        this.surname = surname;
-        this.age = age;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-    }
 }

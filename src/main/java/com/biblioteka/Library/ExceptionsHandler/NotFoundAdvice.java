@@ -23,7 +23,7 @@ public class NotFoundAdvice {
     }
 
     @ExceptionHandler(AuthorNotFoundException.class)
-    public String authorNotFoundAdivce(AuthorNotFoundException exception){
+    public String authorNotFoundAdvice(AuthorNotFoundException exception){
         return exception.getMessage();
     }
 }

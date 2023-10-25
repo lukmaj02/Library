@@ -28,7 +28,7 @@ public class BookService {
         this.modelMapper = modelMapper;
     }
 
-    public List<BookResponse> getBooks() { //todo
+    public List<BookResponse> getBooks() {
         List<Book> books = bookRepository.findAll();
         return Arrays.asList(modelMapper.map(books,BookResponse[].class));
     }
@@ -38,7 +38,7 @@ public class BookService {
         return modelMapper.map(book, BookResponse.class);
     }
 
-    public void addBook(BookRequest bookRequest) { //todo
+    public void addBook(BookRequest bookRequest) {
         if(bookRepository.existsByIsbn(bookRequest.getIsbn())){
             throw new BookExistingException(bookRequest.getIsbn());
         }
