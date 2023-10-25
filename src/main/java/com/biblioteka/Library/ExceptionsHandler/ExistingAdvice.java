@@ -20,7 +20,7 @@ public class ExistingAdvice {
         return exception.getMessage();
     }
     @ExceptionHandler(AuthorExistingBooksException.class)
-    public String authorExistsingBooksException(AuthorExistingBooksException exception){
+    public String authorExistingBooksException(AuthorExistingBooksException exception){
         return exception.getMessage();
     }
 }
