@@ -22,4 +22,10 @@ public class RegistrationController {
     public User register(@RequestBody RegistrationRequest registrationRequest){
         return registrationService.register(registrationRequest);
     }
+
+    @GetMapping("/confirm")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public String confirm(@RequestParam("token") String token){
+        return registrationService.confirmToken(token);
+    }
 }

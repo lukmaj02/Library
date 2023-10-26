@@ -1,9 +1,9 @@
 package com.biblioteka.Library.Service;
 
 import com.biblioteka.Library.Entity.Author;
-import com.biblioteka.Library.Exceptions.AuthorExistingException;
-import com.biblioteka.Library.Exceptions.AuthorExistingBooksException;
-import com.biblioteka.Library.Exceptions.AuthorNotFoundException;
+import com.biblioteka.Library.Exceptions.ExistingException.AuthorExistingException;
+import com.biblioteka.Library.Exceptions.ExistingException.AuthorExistingBooksException;
+import com.biblioteka.Library.Exceptions.NotFoundException.AuthorNotFoundException;
 import com.biblioteka.Library.Repository.AuthorRepository;
 import com.biblioteka.Library.dto.AuthorResponse;
 import org.modelmapper.ModelMapper;

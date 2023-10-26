@@ -9,7 +9,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -21,15 +23,19 @@ import java.util.Set;
 public class User implements UserDetails {
     @Id
     @GeneratedValue
-    private Integer id;
+    private UUID id;
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String surname;
-    private String email;
+    @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
+    private String username;
     private String phoneNumber;
-    @Enumerated(EnumType.STRING)
-    private AppRoles appUserRole;
     private LocalDate date;
+    private boolean locked = false;
+    private boolean enabled = false;
 
     @ManyToMany
     @JoinTable(
@@ -41,8 +47,10 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(appUserRole.name());
-        return null;
+        Collection<SimpleGrantedAuthority> simpleGrantedAuthorities = new HashSet<>();
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(AppRoles.USER.name());
+        simpleGrantedAuthorities.add(authority);
+        return simpleGrantedAuthorities;
     }
 
     @Override
@@ -52,7 +60,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
 
     @Override
@@ -72,6 +80,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 }

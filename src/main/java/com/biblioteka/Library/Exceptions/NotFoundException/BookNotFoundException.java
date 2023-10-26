@@ -1,4 +1,4 @@
-package com.biblioteka.Library.Exceptions;
+package com.biblioteka.Library.Exceptions.NotFoundException;
 
 public class BookNotFoundException extends RuntimeException{
     public BookNotFoundException(){

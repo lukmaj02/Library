@@ -1,7 +1,7 @@
 package com.biblioteka.Library.Service;
 
 import com.biblioteka.Library.Entity.Employee;
-import com.biblioteka.Library.Exceptions.EmployeeNotFoundException;
+import com.biblioteka.Library.Exceptions.NotFoundException.EmployeeNotFoundException;
 import com.biblioteka.Library.Repository.EmployeeRepository;
 import com.biblioteka.Library.dto.EmployeeRequest;
 import com.biblioteka.Library.dto.EmployeeResponse;

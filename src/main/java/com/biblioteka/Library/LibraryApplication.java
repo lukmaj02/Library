@@ -12,9 +12,6 @@ import java.util.Arrays;
 @SpringBootApplication
 public class LibraryApplication {
 
-	@Autowired
-	ApplicationContext context;
-
 	public static void main(String[] args) {
 		SpringApplication.run(LibraryApplication.class, args);
 	}
