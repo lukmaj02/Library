@@ -1,4 +1,4 @@
-package com.biblioteka.Library.Exceptions;
+package com.biblioteka.Library.Exceptions.NotFoundException;
 
 public class EmployeeNotFoundException extends RuntimeException {
     public EmployeeNotFoundException(Integer id){

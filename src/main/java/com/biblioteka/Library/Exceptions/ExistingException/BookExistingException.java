@@ -1,4 +1,4 @@
-package com.biblioteka.Library.Exceptions;
+package com.biblioteka.Library.Exceptions.ExistingException;
 
 public class BookExistingException extends RuntimeException{
     public BookExistingException(String ISBN){

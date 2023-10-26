@@ -1,4 +1,4 @@
-package com.biblioteka.Library.Exceptions;
+package com.biblioteka.Library.Exceptions.NotFoundException;
 
 import com.biblioteka.Library.Entity.Author;
 import com.biblioteka.Library.Entity.Book;

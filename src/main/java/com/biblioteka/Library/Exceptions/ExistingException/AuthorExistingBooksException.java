@@ -1,4 +1,4 @@
-package com.biblioteka.Library.Exceptions;
+package com.biblioteka.Library.Exceptions.ExistingException;
 import com.biblioteka.Library.Entity.Author;
 import com.biblioteka.Library.dto.AuthorResponse;
 

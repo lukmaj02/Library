@@ -1,8 +1,8 @@
 package com.biblioteka.Library.Service;
 
 import com.biblioteka.Library.Entity.Book;
-import com.biblioteka.Library.Exceptions.BookExistingException;
-import com.biblioteka.Library.Exceptions.BookNotFoundException;
+import com.biblioteka.Library.Exceptions.ExistingException.BookExistingException;
+import com.biblioteka.Library.Exceptions.NotFoundException.BookNotFoundException;
 import com.biblioteka.Library.Repository.AuthorRepository;
 import com.biblioteka.Library.Repository.BookRepository;
 import com.biblioteka.Library.dto.BookRequest;
