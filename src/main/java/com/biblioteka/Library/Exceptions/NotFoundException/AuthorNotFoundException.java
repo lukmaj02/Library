@@ -5,6 +5,9 @@ import com.biblioteka.Library.Entity.Book;
 import jakarta.persistence.criteria.CriteriaBuilder;
 
 public class AuthorNotFoundException extends RuntimeException {
+    public AuthorNotFoundException(){
+        super("Author not found");
+    }
     public AuthorNotFoundException(Book book){
         super("Author for book "+ book.getTitle() +" not found");
     }

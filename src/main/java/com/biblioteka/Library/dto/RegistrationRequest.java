@@ -1,6 +1,5 @@
 package com.biblioteka.Library.dto;
 
-import com.biblioteka.Library.Registration.AppRoles;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -3,12 +3,10 @@ package com.biblioteka.Library.Entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.*;
-import org.antlr.v4.runtime.misc.NotNull;
-
-import java.time.LocalDate;
+import org.hibernate.annotations.Cascade;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -27,12 +25,13 @@ public class Book {
     private Integer quantity;
     private String isbn;
 
-    @OneToOne
+    @ManyToOne
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @JoinColumn(name = "author_id", referencedColumnName = "id")
     @JsonBackReference
     private Author author;
 
     @ManyToMany(mappedBy = "users_books")
     @JsonIgnore
-    private List<User> users;
+    private Set<User> users;
 }

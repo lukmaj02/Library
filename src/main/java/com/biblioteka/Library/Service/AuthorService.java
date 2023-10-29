@@ -5,9 +5,10 @@ import com.biblioteka.Library.Exceptions.ExistingException.AuthorExistingExcepti
 import com.biblioteka.Library.Exceptions.ExistingException.AuthorExistingBooksException;
 import com.biblioteka.Library.Exceptions.NotFoundException.AuthorNotFoundException;
 import com.biblioteka.Library.Repository.AuthorRepository;
-import com.biblioteka.Library.dto.AuthorResponse;
+import com.biblioteka.Library.dto.AuthorDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -30,24 +31,27 @@ public class AuthorService {
         return authorRepository.findById(id).orElseThrow(() -> new AuthorNotFoundException(id));
     }
 
+    public Author getAuthorByAuthorDto(AuthorDto authorDto){
+        return authorRepository.findByFirstNameAndLastName(authorDto.getFirstName(), authorDto.getLastName()).orElseThrow(AuthorNotFoundException::new);
+    }
+
     public void addAuthor(Author author){
-        if(existsAuthor(author)) throw new AuthorExistingException(modelMapper.map(author, AuthorResponse.class));
         authorRepository.save(author);
     }
 
-    public void changeById(Integer id, Author author) {
+    public void changeById(Integer id, AuthorDto authorDto) {
        Author changedAuthor = authorRepository.findById(id).orElseThrow(() -> new AuthorNotFoundException(id));
-       changedAuthor.setFirstName(author.getFirstName());
-       changedAuthor.setLastName(author.getLastName());
+       changedAuthor.setFirstName(authorDto.getFirstName());
+       changedAuthor.setLastName(authorDto.getLastName());
     }
 
     public void deleteById(Integer id) {
         Author author = authorRepository.findById(id).orElseThrow(() -> new AuthorNotFoundException(id));
-        if (!author.getBooks().isEmpty()) throw new AuthorExistingBooksException(modelMapper.map(author, AuthorResponse.class));
+        if (!author.getBooks().isEmpty()) throw new AuthorExistingBooksException(modelMapper.map(author, AuthorDto.class));
         authorRepository.delete(author);
     }
 
-    public boolean existsAuthor(Author author){
-        return authorRepository.existsByFirstNameAndLastName(author.getFirstName(), author.getLastName());
+    public boolean existsAuthor(AuthorDto authorDto){
+        return authorRepository.existsByFirstNameAndLastName(authorDto.getFirstName(), authorDto.getLastName());
     }
 }

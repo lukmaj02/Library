@@ -1,9 +1,8 @@
 package com.biblioteka.Library.Exceptions.ExistingException;
-import com.biblioteka.Library.Entity.Author;
-import com.biblioteka.Library.dto.AuthorResponse;
+import com.biblioteka.Library.dto.AuthorDto;
 
 public class AuthorExistingBooksException extends RuntimeException{
-    public AuthorExistingBooksException(AuthorResponse authorResponse){
-        super("Cannot delete " + authorResponse.getFirstName() +" "+ authorResponse.getLastName() + ", existing books");
+    public AuthorExistingBooksException(AuthorDto authorDto){
+        super("Cannot delete " + authorDto.getFirstName() +" "+ authorDto.getLastName() + ", existing books");
     }
 }
