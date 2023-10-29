@@ -4,8 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -17,7 +16,6 @@ import java.util.List;
 public class Author {
     @Id
     @GeneratedValue
-    @JsonIgnore
     private Integer id;
     @Column(name = "first_name")
     private String firstName;
@@ -26,5 +24,5 @@ public class Author {
 
     @JsonIgnore
     @OneToMany(mappedBy = "author")
-    private List<Book> books;
+    private Set<Book> books;
 }

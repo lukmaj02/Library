@@ -2,6 +2,7 @@ package com.biblioteka.Library.Controller;
 
 import com.biblioteka.Library.Entity.Author;
 import com.biblioteka.Library.Service.AuthorService;
+import com.biblioteka.Library.dto.AuthorDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -28,15 +29,10 @@ public class AuthorController {
         return authorService.getAuthorById(id);
     }
 
-    @PostMapping("")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void add(@RequestBody Author author) {
-        authorService.addAuthor(author);
-    }
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void changeById(@PathVariable Integer id, @RequestBody Author author) {
-        authorService.changeById(id, author);
+    public void changeById(@PathVariable Integer id, @RequestBody AuthorDto authorDto) {
+        authorService.changeById(id, authorDto);
     }
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)

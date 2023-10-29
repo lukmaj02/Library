@@ -1,9 +1,9 @@
 package com.biblioteka.Library.Exceptions.ExistingException;
 
-import com.biblioteka.Library.dto.AuthorResponse;
+import com.biblioteka.Library.dto.AuthorDto;
 
 public class AuthorExistingException extends RuntimeException {
-    public AuthorExistingException(AuthorResponse authorResponse) {
-        super("Author " + authorResponse.getFirstName()+ " "+ authorResponse.getLastName() + " already exists!");
+    public AuthorExistingException(AuthorDto authorDto) {
+        super("Author " + authorDto.getFirstName()+ " "+ authorDto.getLastName() + " already exists!");
     }
 }

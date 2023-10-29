@@ -1,11 +1,13 @@
 package com.biblioteka.Library.Entity;
 
-import com.biblioteka.Library.Registration.AppRoles;
+import com.biblioteka.Library.Security.config.AppRoles;
+import com.biblioteka.Library.Security.config.Permission;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import com.biblioteka.Library.Security.config.Permission.*;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -15,8 +17,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Builder
 @Entity
 @Table(name ="user")
@@ -37,6 +38,9 @@ public class User implements UserDetails {
     private boolean locked = false;
     private boolean enabled = false;
 
+    @Enumerated(EnumType.STRING)
+    private final AppRoles role;
+
     @ManyToMany
     @JoinTable(
             name = "users_books",
@@ -47,10 +51,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection<SimpleGrantedAuthority> simpleGrantedAuthorities = new HashSet<>();
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(AppRoles.USER.name());
-        simpleGrantedAuthorities.add(authority);
-        return simpleGrantedAuthorities;
+        return role.getAuthorities();
     }
 
     @Override
