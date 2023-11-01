@@ -1,15 +1,14 @@
 package com.biblioteka.Library.Service;
 
 import com.biblioteka.Library.Entity.Author;
-import com.biblioteka.Library.Exceptions.ExistingException.AuthorExistingException;
 import com.biblioteka.Library.Exceptions.ExistingException.AuthorExistingBooksException;
 import com.biblioteka.Library.Exceptions.NotFoundException.AuthorNotFoundException;
 import com.biblioteka.Library.Repository.AuthorRepository;
 import com.biblioteka.Library.dto.AuthorDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service

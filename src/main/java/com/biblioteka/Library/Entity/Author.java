@@ -2,9 +2,11 @@ package com.biblioteka.Library.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.databind.deser.std.UUIDDeserializer;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.Set;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -15,7 +17,7 @@ import java.util.Set;
 @Table(name ="author")
 public class Author {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "first_name")
     private String firstName;

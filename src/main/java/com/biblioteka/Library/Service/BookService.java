@@ -3,7 +3,6 @@ package com.biblioteka.Library.Service;
 import com.biblioteka.Library.Entity.Author;
 import com.biblioteka.Library.Entity.Book;
 import com.biblioteka.Library.Entity.User;
-import com.biblioteka.Library.Exceptions.ExistingException.AuthorExistingException;
 import com.biblioteka.Library.Exceptions.ExistingException.BookExistingException;
 import com.biblioteka.Library.Exceptions.BookForbiddenToBorrowException;
 import com.biblioteka.Library.Exceptions.NotFoundException.AuthorNotFoundException;
@@ -11,16 +10,17 @@ import com.biblioteka.Library.Exceptions.NotFoundException.BookNotFoundException
 import com.biblioteka.Library.Repository.AuthorRepository;
 import com.biblioteka.Library.Repository.BookRepository;
 import com.biblioteka.Library.dto.AuthorDto;
-import com.biblioteka.Library.dto.BookRequest;
-import com.biblioteka.Library.dto.BookResponse;
+import com.biblioteka.Library.dto.BookDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class BookService {
@@ -36,14 +36,14 @@ public class BookService {
         this.modelMapper = modelMapper;
     }
 
-    public List<BookResponse> getBooks() {
+    public List<BookDto> getBooks() {
         List<Book> books = bookRepository.findAll();
-        return Arrays.asList(modelMapper.map(books,BookResponse[].class));
+        return Arrays.asList(modelMapper.map(books,BookDto[].class));
     }
 
-    public BookResponse getBook(Integer id) {
+    public BookDto getBook(Integer id) {
         Book book = bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
-        return modelMapper.map(book, BookResponse.class);
+        return modelMapper.map(book, BookDto.class);
     }
 
     public boolean isPossibleToBorrow(Book book){
@@ -58,34 +58,42 @@ public class BookService {
         return book;
     }
 
-    public void addBook(BookRequest bookRequest) {
-        if(bookRepository.existsByIsbn(bookRequest.getIsbn())){
-            throw new BookExistingException(bookRequest.getIsbn());
+    @Transactional
+    public void addBook(BookDto bookDto) {
+        if(bookRepository.existsByIsbn(bookDto.getIsbn())){
+            throw new BookExistingException(bookDto.getIsbn());
         }
-        Book book = modelMapper.map(bookRequest, Book.class);
-        Author author;
+        var book = Book.builder()
+                .title(bookDto.getTitle())
+                .isbn(bookDto.getIsbn())
+                .quantity(bookDto.getQuantity())
+                .publicationDate(bookDto.getPublicationDate())
+                .build();
 
+        Author author;
         try{
-            author = authorService.getAuthorByAuthorDto(bookRequest.getAuthor());
+            author = authorService.getAuthorByAuthorDto(bookDto.getAuthor());
         }
         catch (AuthorNotFoundException authorNotFoundException){
             author =Author.builder()
-                    .firstName(bookRequest.getAuthor().getFirstName())
-                    .lastName(bookRequest.getAuthor().getLastName())
+                    .firstName(bookDto.getAuthor().getFirstName())
+                    .lastName(bookDto.getAuthor().getLastName())
                     .build();
             authorService.addAuthor(author);
         }
-
         book.setAuthor(author);
         bookRepository.save(book);
     }
-
-    public void changeBook(Integer id, BookRequest bookRequest) {
+    public void changeBookQuantity(Integer id, BookDto bookDto) {
         Book book = bookRepository.findById(id).orElseThrow(BookNotFoundException::new);
+        book.setQuantity(bookDto.getQuantity());
+        bookRepository.save(book);
     }
 
     public void deleteBook(Integer id) {
         Book book = bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
+        var author = book.getAuthor();
+        //if(authorService.)
         bookRepository.delete(book);
     }
 

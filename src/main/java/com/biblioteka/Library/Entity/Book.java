@@ -5,8 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
-import java.util.List;
 import java.util.Set;
+
+import static jakarta.persistence.CascadeType.*;
 
 @Getter
 @Setter
@@ -17,7 +18,7 @@ import java.util.Set;
 @Table(name = "book")
 public class Book {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String title;
     @Column(name = "publication_date")
@@ -26,7 +27,6 @@ public class Book {
     private String isbn;
 
     @ManyToOne
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @JoinColumn(name = "author_id", referencedColumnName = "id")
     @JsonBackReference
     private Author author;

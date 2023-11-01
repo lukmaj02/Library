@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -40,7 +41,9 @@ public class WebSecurityConfig {
         http
                 .csrf().disable()
                 .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers("/book", "/author","/registration", "/registration/confirm")
+                        .requestMatchers(HttpMethod.GET, "/book", "/author", "/book/**", "/author/**")
+                        .permitAll()
+                        .requestMatchers("/registration", "/registration/confirm")
                         .permitAll()
                         .anyRequest().authenticated()
                 )

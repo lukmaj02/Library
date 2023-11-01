@@ -17,13 +17,14 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Entity
 @Table(name ="user")
 public class User implements UserDetails {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     @Column(nullable = false)
     private String name;
@@ -37,11 +38,10 @@ public class User implements UserDetails {
     private LocalDate date;
     private boolean locked = false;
     private boolean enabled = false;
-
     @Enumerated(EnumType.STRING)
-    private final AppRoles role;
+    private AppRoles role;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             name = "users_books",
             joinColumns = @JoinColumn(name = "user_id"),

@@ -5,12 +5,14 @@ import com.biblioteka.Library.dto.EmployeeRequest;
 import com.biblioteka.Library.dto.EmployeeResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
 @RequestMapping("/employee")
-public class EmployeeController implements IController<EmployeeRequest, EmployeeResponse, Integer> {
+@PreAuthorize("hasRole('ADMIN')")
+public class EmployeeController {
 
     private final EmployeeService employeeService;
 
@@ -19,32 +21,29 @@ public class EmployeeController implements IController<EmployeeRequest, Employee
         this.employeeService = employeeService;
     }
 
-    @Override
     @GetMapping("")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public List<EmployeeResponse> getAll() {
         return employeeService.getEmployee();
     }
-    @Override
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public EmployeeResponse getById(@PathVariable Integer id){
         return employeeService.getEmployeeById(id);
     }
-    @Override
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public void add(@RequestBody EmployeeRequest employeeRequest){
         employeeService.addEmployee(employeeRequest);
     }
 
-    @Override
+
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void changeById(@PathVariable Integer id, @RequestBody EmployeeRequest employeeRequest){
         employeeService.changeEmployee(employeeRequest, id);
     }
-    @Override @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void deleteById(@PathVariable Integer id){
         employeeService.deleteEmployee(id);

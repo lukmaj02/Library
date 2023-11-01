@@ -24,12 +24,15 @@ public enum AppRoles {
             ADMIN_UPDATE,
             EMPLOYEE_READ,
             EMPLOYEE_CREATE,
-            EMPLOYEE_DELETE
+            EMPLOYEE_DELETE,
+            EMPLOYEE_UPDATE
+
     )),
     EMPLOYEE(Set.of(
             EMPLOYEE_READ,
             EMPLOYEE_CREATE,
-            EMPLOYEE_DELETE
+            EMPLOYEE_DELETE,
+            EMPLOYEE_UPDATE
     ));
 
     @Getter
@@ -38,7 +41,7 @@ public enum AppRoles {
     public Set<SimpleGrantedAuthority> getAuthorities(){
         var authorities =  getPermissions()
                 .stream()
-                .map(permission -> new SimpleGrantedAuthority(permission.name()))
+                .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
                 .collect(Collectors.toSet());
         authorities.add(new SimpleGrantedAuthority("ROLE_" + this.name()));
         return authorities;

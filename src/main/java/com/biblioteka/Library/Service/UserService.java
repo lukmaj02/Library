@@ -5,7 +5,7 @@ import com.biblioteka.Library.Entity.User;
 import com.biblioteka.Library.Exceptions.ExistingException.EmailAlreadyExistsException;
 import com.biblioteka.Library.Repository.UserRepository;
 import com.biblioteka.Library.Token.ConfirmationToken;
-import com.biblioteka.Library.dto.BookResponse;
+import com.biblioteka.Library.dto.BookDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,7 +27,7 @@ public class UserService implements UserDetailsService {
     private final ConfirmationTokenService confirmationTokenService;
     private final ModelMapper modelMapper;
     private final BookService bookService;
-    //private final String currentlyAuthenticated;
+
 
     @Autowired
     public UserService(UserRepository userRepository,
@@ -41,7 +41,6 @@ public class UserService implements UserDetailsService {
         this.confirmationTokenService = confirmationTokenService;
         this.bookService = bookService;
         this.modelMapper = modelMapper;
-        //this.currentlyAuthenticated = currentlyAuthenticated;
     }
 
     @Override
@@ -68,9 +67,9 @@ public class UserService implements UserDetailsService {
         userRepository.enableUser(username);
     }
 
-    public Collection<BookResponse> getUserBooks(String username) {
+    public Collection<BookDto> getUserBooks(String username) {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("not Found"));
-        return Arrays.asList(modelMapper.map(bookService.getUserBooks(user), BookResponse[].class));
+        return Arrays.asList(modelMapper.map(bookService.getUserBooks(user), BookDto[].class));
     }
     @Transactional
     public void borrowBook(Integer id, String username){
