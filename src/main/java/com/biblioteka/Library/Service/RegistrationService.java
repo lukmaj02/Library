@@ -28,11 +28,11 @@ public class RegistrationService {
 
     public User register(RegistrationRequest registrationRequest) {
         User user = modelMapper.map(registrationRequest, User.class);
+        //user.setRole(registrationRequest.getRole());
         userService.createUser(user);
         return user;
     }
 
-    @Transactional
     public String confirmToken(String token) {
         ConfirmationToken confirmationToken = confirmationTokenService.getToken(token);
         if (confirmationToken.getConfirmedAt() != null) {
