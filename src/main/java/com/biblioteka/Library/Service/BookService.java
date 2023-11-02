@@ -26,33 +26,29 @@ import java.util.stream.Collectors;
 public class BookService {
     private final BookRepository bookRepository;
     private final AuthorService authorService;
-    private final ModelMapper modelMapper;
 
     @Autowired
     public BookService(BookRepository bookRepository,
-                       AuthorRepository authorRepository, AuthorService authorService, ModelMapper modelMapper) {
+                       AuthorService authorService) {
         this.bookRepository = bookRepository;
         this.authorService = authorService;
-        this.modelMapper = modelMapper;
     }
 
-    public List<BookDto> getBooks() {
-        List<Book> books = bookRepository.findAll();
-        return Arrays.asList(modelMapper.map(books,BookDto[].class));
+    public List<Book> getBooks() {
+        return bookRepository.findAll();
     }
 
-    public BookDto getBook(Integer id) {
-        Book book = bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
-        return modelMapper.map(book, BookDto.class);
+    public Book getBookById(Integer id) {
+        return bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
     }
 
-    public boolean isPossibleToBorrow(Book book){
-        return book.getQuantity() >= 0;
+    public Book getBookByTitle(String title){
+        return bookRepository.findByTitle(title).orElseThrow(() -> new BookNotFoundException(title));
     }
 
     public Book borrowBookById(Integer id){
         Book book = bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
-        if(!isPossibleToBorrow(book)) throw new BookForbiddenToBorrowException();
+        if(book.getQuantity()<=0) throw new BookForbiddenToBorrowException();
         book.setQuantity(book.getQuantity()-1);
         bookRepository.save(book);
         return book;
@@ -93,11 +89,6 @@ public class BookService {
     public void deleteBook(Integer id) {
         Book book = bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
         var author = book.getAuthor();
-        //if(authorService.)
         bookRepository.delete(book);
-    }
-
-    public Collection<Book> getUserBooks(User user){
-        return bookRepository.findByUsers(user).orElseThrow(() -> new BookNotFoundException(user));
     }
 }

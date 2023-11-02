@@ -25,6 +25,7 @@ import java.util.UUID;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "user_id")
     private UUID id;
     @Column(nullable = false)
     private String name;
@@ -41,13 +42,16 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private AppRoles role;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(
-            name = "users_books",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id")
-    )
-    private Set<Book> users_books;
+//    @ManyToMany(cascade = CascadeType.MERGE)
+//    @JoinTable(
+//            name = "users_books",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "book_id")
+//    )
+//    private Set<Book> userBooks;
+
+    @OneToMany(mappedBy = "user")
+    Set<UserBooks> userBooks;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

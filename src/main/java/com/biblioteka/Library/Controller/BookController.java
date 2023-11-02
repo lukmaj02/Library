@@ -2,12 +2,16 @@ package com.biblioteka.Library.Controller;
 
 import com.biblioteka.Library.Service.BookService;
 import com.biblioteka.Library.dto.BookDto;
+import com.biblioteka.Library.dto.Mapper.BookMapper;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/book")
@@ -22,14 +26,17 @@ public class BookController {
 
     @GetMapping("")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public List<BookDto> getAll() {
-        return bookService.getBooks();
+    public Set<BookDto> getAll() {
+        return bookService.getBooks()
+                .stream()
+                .map(BookMapper::map)
+                .collect(Collectors.toSet());
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public BookDto getById(@PathVariable Integer id) {
-        return bookService.getBook(id);
+        return BookMapper.map(bookService.getBookById(id));
     }
 
 

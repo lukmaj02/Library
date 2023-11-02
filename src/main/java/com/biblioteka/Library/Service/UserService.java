@@ -25,8 +25,6 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
-    private final ModelMapper modelMapper;
-    private final BookService bookService;
 
 
     @Autowired
@@ -39,8 +37,6 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.confirmationTokenService = confirmationTokenService;
-        this.bookService = bookService;
-        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -67,18 +63,4 @@ public class UserService implements UserDetailsService {
         userRepository.enableUser(username);
     }
 
-    public Collection<BookDto> getUserBooks(String username) {
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("not Found"));
-        return Arrays.asList(modelMapper.map(bookService.getUserBooks(user), BookDto[].class));
-    }
-    @Transactional
-    public void borrowBook(Integer id, String username){
-        Book book = bookService.borrowBookById(id);
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("not Found"));
-        user.getUsers_books().add(book);
-    }
-
-    public void getUserBookWithId(Integer id) {
-
-    }
 }

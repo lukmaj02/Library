@@ -3,10 +3,7 @@ package com.biblioteka.Library;
 import com.biblioteka.Library.Service.BookService;
 import com.biblioteka.Library.Service.RegistrationService;
 import com.biblioteka.Library.Service.UserService;
-import com.biblioteka.Library.dto.AuthorDto;
-import com.biblioteka.Library.dto.BookDto;
-import com.biblioteka.Library.dto.EmployeeResponse;
-import com.biblioteka.Library.dto.RegistrationRequest;
+import com.biblioteka.Library.dto.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -36,7 +33,6 @@ public class AppConfig {
                     .password("admin")
                     .phoneNumber("123456789")
                     .date(LocalDate.of(2002,1,1))
-                    .role(ADMIN)
                     .build();
 
             var user = RegistrationRequest.builder()
@@ -46,7 +42,6 @@ public class AppConfig {
                     .password("user")
                     .phoneNumber("987654321")
                     .date(LocalDate.of(2000,1,1))
-                    .role(USER)
                     .build();
 
             var employee = RegistrationRequest.builder()
@@ -56,7 +51,6 @@ public class AppConfig {
                     .password("employee")
                     .phoneNumber("192837475")
                     .date(LocalDate.of(1999,1,1))
-                    .role(EMPLOYEE)
                     .build();
 
 
