@@ -19,6 +19,7 @@ import static jakarta.persistence.CascadeType.*;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "book_id")
     private Integer id;
     private String title;
     @Column(name = "publication_date")
@@ -31,7 +32,10 @@ public class Book {
     @JsonBackReference
     private Author author;
 
-    @ManyToMany(mappedBy = "users_books")
-    @JsonIgnore
-    private Set<User> users;
+//    @ManyToMany(mappedBy = "userBooks")
+//    @JsonIgnore
+//    private Set<User> users;
+
+    @OneToMany(mappedBy = "book")
+    private Set<UserBooks> userBooks;
 }

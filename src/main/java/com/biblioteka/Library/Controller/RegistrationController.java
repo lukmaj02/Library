@@ -20,8 +20,8 @@ public class RegistrationController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public User register(@RequestBody RegistrationRequest registrationRequest){
-        return registrationService.register(registrationRequest);
+    public void register(@RequestBody RegistrationRequest registrationRequest){
+        registrationService.register(registrationRequest);
     }
 
     @GetMapping("/confirm")

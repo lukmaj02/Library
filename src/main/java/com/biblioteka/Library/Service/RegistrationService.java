@@ -3,6 +3,7 @@ package com.biblioteka.Library.Service;
 import com.biblioteka.Library.Entity.User;
 import com.biblioteka.Library.Exceptions.ConfirmationTokenExpired;
 import com.biblioteka.Library.Exceptions.ExistingException.EmailAlreadyExistsException;
+import com.biblioteka.Library.Security.config.AppRoles;
 import com.biblioteka.Library.Token.ConfirmationToken;
 import com.biblioteka.Library.dto.RegistrationRequest;
 import org.modelmapper.ModelMapper;
@@ -26,11 +27,10 @@ public class RegistrationService {
         this.confirmationTokenService = confirmationTokenService;
     }
 
-    public User register(RegistrationRequest registrationRequest) {
+    public void register(RegistrationRequest registrationRequest) {
         User user = modelMapper.map(registrationRequest, User.class);
-        //user.setRole(registrationRequest.getRole());
+        user.setRole(AppRoles.USER);
         userService.createUser(user);
-        return user;
     }
 
     public String confirmToken(String token) {

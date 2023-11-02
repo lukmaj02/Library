@@ -19,5 +19,4 @@ public class RegistrationRequest {
     private String password;
     private String phoneNumber;
     private LocalDate date;
-    private AppRoles role;
 }
