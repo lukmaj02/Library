@@ -2,11 +2,13 @@ package com.biblioteka.Library.Service;
 
 import com.biblioteka.Library.Entity.Author;
 import com.biblioteka.Library.Exceptions.ExistingException.AuthorExistingBooksException;
+import com.biblioteka.Library.Exceptions.ExistingException.AuthorExistingException;
 import com.biblioteka.Library.Exceptions.NotFoundException.AuthorNotFoundException;
 import com.biblioteka.Library.Repository.AuthorRepository;
 import com.biblioteka.Library.dto.AuthorDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,11 +17,9 @@ import java.util.List;
 public class AuthorService {
 
     private final AuthorRepository authorRepository;
-    private final ModelMapper modelMapper;
     @Autowired
-    public AuthorService(AuthorRepository authorRepository, ModelMapper modelMapper) {
+    public AuthorService(AuthorRepository authorRepository) {
         this.authorRepository = authorRepository;
-        this.modelMapper = modelMapper;
     }
 
     public List<Author> getAllAuthors() {
@@ -29,28 +29,36 @@ public class AuthorService {
     public Author getAuthorById(Integer id) {
         return authorRepository.findById(id).orElseThrow(() -> new AuthorNotFoundException(id));
     }
-
-    public Author getAuthorByAuthorDto(AuthorDto authorDto){
-        return authorRepository.findByFirstNameAndLastName(authorDto.getFirstName(), authorDto.getLastName()).orElseThrow(AuthorNotFoundException::new);
+    public Author getAuthorByFirstNameAndLastName(String firstName, String lastName){
+        return authorRepository.findByFirstNameAndLastName(firstName,lastName).orElseThrow(AuthorNotFoundException::new);
     }
 
-    public void addAuthor(Author author){
-        authorRepository.save(author);
+    public Author getAuthorIfNotExistsAdd(Author author){
+        try{
+            author = getAuthorByFirstNameAndLastName(author.getFirstName(), author.getLastName());
+        }
+        catch (AuthorNotFoundException authorNotFoundException){
+            authorRepository.save(author);
+        }
+        return author;
     }
 
     public void changeById(Integer id, AuthorDto authorDto) {
-       Author changedAuthor = authorRepository.findById(id).orElseThrow(() -> new AuthorNotFoundException(id));
-       changedAuthor.setFirstName(authorDto.getFirstName());
-       changedAuthor.setLastName(authorDto.getLastName());
+//       try{
+//           Author changedAuthor = getAuthorById(id);
+//           changedAuthor.setFirstName(authorDto.getFirstName());
+//           changedAuthor.setLastName(authorDto.getLastName());
+//       }
+//       catch(AuthorNotFoundException ignored){}
     }
 
     public void deleteById(Integer id) {
-        Author author = authorRepository.findById(id).orElseThrow(() -> new AuthorNotFoundException(id));
-        if (!author.getBooks().isEmpty()) throw new AuthorExistingBooksException(modelMapper.map(author, AuthorDto.class));
-        authorRepository.delete(author);
-    }
-
-    public boolean existsAuthor(AuthorDto authorDto){
-        return authorRepository.existsByFirstNameAndLastName(authorDto.getFirstName(), authorDto.getLastName());
+//        if (!author.getBooks().isEmpty()) throw new AuthorExistingBooksException(modelMapper.map(author, AuthorDto.class));
+//        authorRepository.delete(author);
+//
+//        try{
+//            var author = getAuthorById(id);
+//        }
+//        catch(AuthorNotFoundException ignored){}
     }
 }

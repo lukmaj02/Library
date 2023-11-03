@@ -3,7 +3,6 @@ package com.biblioteka.Library.Controller;
 import com.biblioteka.Library.Service.BookService;
 import com.biblioteka.Library.dto.BookDto;
 import com.biblioteka.Library.dto.Mapper.BookMapper;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -44,14 +43,14 @@ public class BookController {
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')")
     public void add(@RequestBody BookDto bookDto) {
-        bookService.addBook(bookDto);
+        bookService.addBook(BookMapper.map(bookDto));
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')")
-    public void changeQuantityById(@PathVariable Integer id, @RequestBody BookDto bookDto) {
-        bookService.changeBookQuantity(id, bookDto);
+    public void changeQuantityById(@PathVariable Integer id, @RequestParam("quantity") Integer quantity) {
+        bookService.changeBookQuantity(id, quantity);
     }
 
     @DeleteMapping("/{id}")

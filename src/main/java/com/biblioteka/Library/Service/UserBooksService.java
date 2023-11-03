@@ -1,7 +1,9 @@
 package com.biblioteka.Library.Service;
 
+import com.biblioteka.Library.Entity.Author;
 import com.biblioteka.Library.Entity.User;
 import com.biblioteka.Library.Entity.UserBooks;
+import com.biblioteka.Library.Exceptions.NotFoundException.BookNotFoundException;
 import com.biblioteka.Library.Repository.UserBooksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,22 @@ public class UserBooksService {
         this.userService = userService;
         this.userBooksRepository = userBooksRepository;
     }
+    public Set<UserBooks> getAllUserBooks(String username){
+        var user = (User) userService.loadUserByUsername(username);
+        return user.getUserBooks();
+    }
+
+    public UserBooks getUserBookWithId(Integer bookId, String username){
+        var user = (User) userService.loadUserByUsername(username);
+        var book = bookService.getBookById(bookId);
+        return userBooksRepository.findByUserAndBook(user,book).orElseThrow(BookNotFoundException::new);
+    }
+    @Transactional
+    public void userReturnsBook(Integer bookId, String username){
+        var userBook = getUserBookWithId(bookId, username);
+        userBook.setReturnDate(LocalDateTime.now());
+        bookService.returnBookById(bookId);
+    }
 
     @Transactional
     public void userBorrowsBook(Integer bookId, String username){
@@ -39,14 +57,7 @@ public class UserBooksService {
         );
     }
 
-    public Set<UserBooks> getAllUserBooks(String username){
-        var user = (User) userService.loadUserByUsername(username);
-        return user.getUserBooks();
-    }
-
-    public UserBooks getUserBookWithId(Integer bookId, String username){
-        var user = (User) userService.loadUserByUsername(username);
-        var book = bookService.getBookById(bookId);
-        return userBooksRepository.findByUserAndBook(user,book).orElseThrow(RuntimeException::new);
-    }
+//    public UserBooks getUserBooksWithAuthor(Author author, String surname){
+//
+//    }
 }

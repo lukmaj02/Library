@@ -42,14 +42,6 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private AppRoles role;
 
-//    @ManyToMany(cascade = CascadeType.MERGE)
-//    @JoinTable(
-//            name = "users_books",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "book_id")
-//    )
-//    private Set<Book> userBooks;
-
     @OneToMany(mappedBy = "user")
     Set<UserBooks> userBooks;
 

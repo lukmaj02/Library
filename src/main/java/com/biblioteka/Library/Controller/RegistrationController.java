@@ -1,6 +1,7 @@
 package com.biblioteka.Library.Controller;
 
 import com.biblioteka.Library.Entity.User;
+import com.biblioteka.Library.Security.config.AppRoles;
 import com.biblioteka.Library.Service.RegistrationService;
 import com.biblioteka.Library.dto.RegistrationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,16 @@ public class RegistrationController {
         registrationService.register(registrationRequest);
     }
 
+    @PostMapping("/admin-mode")
+    @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasRole('ADMIN')")
+    public void registerEmployeeOrAdmin(@RequestBody RegistrationRequest registrationRequest, @RequestParam("role") String role){
+        registrationService.registerEmployeeOrAdmin(registrationRequest, role);
+    }
+
     @GetMapping("/confirm")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public String confirm(@RequestParam("token") String token){
-        return registrationService.confirmToken(token);
+    public void confirm(@RequestParam("token") String token){
+        registrationService.confirmToken(token);
     }
 }

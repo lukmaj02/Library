@@ -5,6 +5,7 @@ import com.biblioteka.Library.Exceptions.ConfirmationTokenExpired;
 import com.biblioteka.Library.Exceptions.ExistingException.EmailAlreadyExistsException;
 import com.biblioteka.Library.Security.config.AppRoles;
 import com.biblioteka.Library.Token.ConfirmationToken;
+import com.biblioteka.Library.dto.Mapper.UserMapper;
 import com.biblioteka.Library.dto.RegistrationRequest;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,33 +18,37 @@ import java.time.LocalDateTime;
 public class RegistrationService {
 
     UserService userService;
-    ModelMapper modelMapper;
     ConfirmationTokenService confirmationTokenService;
 
     @Autowired
-    public RegistrationService(UserService userService, ModelMapper modelMapper, ConfirmationTokenService confirmationTokenService) {
+    public RegistrationService(UserService userService, ConfirmationTokenService confirmationTokenService) {
         this.userService = userService;
-        this.modelMapper = modelMapper;
         this.confirmationTokenService = confirmationTokenService;
     }
 
+    private void possibleToRegister(String username){
+        if(userService.userExistsByUsername(username)) throw new EmailAlreadyExistsException();
+    }
+
     public void register(RegistrationRequest registrationRequest) {
-        User user = modelMapper.map(registrationRequest, User.class);
+        possibleToRegister(registrationRequest.getUsername());                      //if not possible, throws exception
+        User user = UserMapper.map(registrationRequest);
         user.setRole(AppRoles.USER);
         userService.createUser(user);
     }
+    public void registerEmployeeOrAdmin(RegistrationRequest registrationRequest, String role) {
+        possibleToRegister(registrationRequest.getUsername());                      //if not possible, throws exception
+        User user = UserMapper.map(registrationRequest);
+        user.setRole(AppRoles.valueOf(role));
+        userService.createUser(user);
+    }
 
-    public String confirmToken(String token) {
+    public void confirmToken(String token) {
         ConfirmationToken confirmationToken = confirmationTokenService.getToken(token);
-        if (confirmationToken.getConfirmedAt() != null) {
-            throw new EmailAlreadyExistsException();
-        }
-
-        if(confirmationToken.getExpiredAt().isBefore(LocalDateTime.now())) {
+        if(confirmationToken.getExpiredAt().isBefore(LocalDateTime.now()))
             throw new ConfirmationTokenExpired();
-        }
+
         confirmationToken.setConfirmedAt(LocalDateTime.now());
         userService.enableUser(confirmationToken.getUser().getUsername());
-        return "confirmed";
     }
 }

@@ -43,20 +43,16 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("not Found"));
     }
+
+    public boolean userExistsByUsername(String username){
+        return userRepository.existsByUsername(username);
+    }
+
     @Transactional
     public void createUser(User user) {
-        if(userRepository.findByUsername(user.getUsername()).isPresent()) {throw new EmailAlreadyExistsException();}
-
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
-        String token = UUID.randomUUID().toString();
-        ConfirmationToken confirmationToken = new ConfirmationToken(
-                token,
-                LocalDateTime.now(),
-                LocalDateTime.now().plusMinutes(15),
-                user
-        );
-        confirmationTokenService.saveConfirmationToken(confirmationToken);
+        confirmationTokenService.generateTokenForUser(user);
     }
 
     public void enableUser(String username){
