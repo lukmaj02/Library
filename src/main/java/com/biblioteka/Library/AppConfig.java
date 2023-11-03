@@ -4,11 +4,13 @@ import com.biblioteka.Library.Service.BookService;
 import com.biblioteka.Library.Service.RegistrationService;
 import com.biblioteka.Library.Service.UserService;
 import com.biblioteka.Library.dto.*;
+import com.biblioteka.Library.dto.Mapper.BookMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.awt.print.Book;
 import java.time.LocalDate;
 
 import static com.biblioteka.Library.Security.config.AppRoles.*;
@@ -17,7 +19,7 @@ import static com.biblioteka.Library.Security.config.AppRoles.*;
 @Configuration
 public class AppConfig {
     @Bean
-    public ModelMapper modelMapper(){
+    public ModelMapper modelMapper() {
         return new ModelMapper();
     }
 
@@ -42,6 +44,15 @@ public class AppConfig {
                     .password("user")
                     .phoneNumber("987654321")
                     .date(LocalDate.of(2000,1,1))
+                    .build();
+
+            var user1 = RegistrationRequest.builder()
+                    .name("user1")
+                    .surname("user1")
+                    .username("user1@user1.com")
+                    .password("user1")
+                    .phoneNumber("987654321")
+                    .date(LocalDate.of(1990,1,1))
                     .build();
 
             var employee = RegistrationRequest.builder()
@@ -75,16 +86,30 @@ public class AppConfig {
                     .publicationDate(1994)
                     .build();
 
-            registrationService.register(admin);
+            var book3 = BookDto.builder()
+                    .title("Władca Pierścieni")
+                    .publicationDate(2000)
+                    .isbn("1984327482394")
+                    .author(AuthorDto.builder()
+                            .firstName("J.R.R")
+                            .lastName("Tolkien")
+                            .build())
+                    .quantity(7)
+                    .build();
+
+            registrationService.registerEmployeeOrAdmin(admin,"ADMIN");
+            registrationService.registerEmployeeOrAdmin(employee, "EMPLOYEE");
             registrationService.register(user);
-            registrationService.register(employee);
+            registrationService.register(user1);
 
             userService.enableUser(employee.getUsername());
             userService.enableUser(user.getUsername());
             userService.enableUser(admin.getUsername());
+            userService.enableUser(user1.getUsername());
 
-            bookService.addBook(book1);
-            bookService.addBook(book2);
+            bookService.addBook(BookMapper.map(book1));
+            bookService.addBook(BookMapper.map(book2));
+            bookService.addBook(BookMapper.map(book3));
         };
-    }
+      }
 }

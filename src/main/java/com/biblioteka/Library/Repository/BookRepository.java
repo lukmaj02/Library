@@ -18,7 +18,7 @@ import java.util.Set;
 @Repository
 public interface BookRepository extends JpaRepository<Book, Integer> {
     Optional<Book> findByTitle(String title);
-    boolean existsByIsbn(String ISBN);
+    boolean existsByIsbnOrTitle(String isbn, String title);
     boolean existsById(@NonNull Integer id);
     Optional<Set<Book>> findAllByAuthor(Author author);
 }

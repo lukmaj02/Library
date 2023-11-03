@@ -32,10 +32,6 @@ public class Book {
     @JsonBackReference
     private Author author;
 
-//    @ManyToMany(mappedBy = "userBooks")
-//    @JsonIgnore
-//    private Set<User> users;
-
     @OneToMany(mappedBy = "book")
     private Set<UserBooks> userBooks;
 }

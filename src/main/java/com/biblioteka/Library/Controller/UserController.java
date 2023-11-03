@@ -15,13 +15,14 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/profile")
 @PreAuthorize("hasRole('USER')")
-public class UserBooksController {
+public class UserController {
     private final UserBooksService userBooksService;
-
     @Autowired
-    public UserBooksController(UserBooksService userBooksService) {
+    public UserController(UserBooksService userBooksService) {
         this.userBooksService = userBooksService;
     }
+
+
     @GetMapping("/books")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Collection<BookDto> getUserBooks (@CurrentSecurityContext (expression = "authentication.name") String username){
@@ -34,7 +35,7 @@ public class UserBooksController {
     @GetMapping("/books/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public BookDto getUserBookWithId(@CurrentSecurityContext (expression = "authentication.name") String username,
-                                     @PathVariable Integer id){;
+                                     @PathVariable Integer id){
         return BookMapper.map(userBooksService.getUserBookWithId(id,username));
     }
 
@@ -44,4 +45,8 @@ public class UserBooksController {
                            @PathVariable Integer id){
         userBooksService.userBorrowsBook(id,username);
     }
+
+//    @PutMapping("/password")
+//    @ResponseStatus(HttpStatus.ACCEPTED)
+//    public changePassword(@RequestBody String password)
 }

@@ -1,9 +1,6 @@
 package com.biblioteka.Library.ExceptionsHandler;
 
-import com.biblioteka.Library.Exceptions.NotFoundException.AuthorNotFoundException;
-import com.biblioteka.Library.Exceptions.NotFoundException.BookNotFoundException;
-import com.biblioteka.Library.Exceptions.NotFoundException.ConfirmationTokenNotFound;
-import com.biblioteka.Library.Exceptions.NotFoundException.EmployeeNotFoundException;
+import com.biblioteka.Library.Exceptions.NotFoundException.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -16,16 +13,16 @@ public class NotFoundAdvice {
     public String employeeNotFoundAdvice(EmployeeNotFoundException exception){
         return exception.getMessage();
     }
-
     @ExceptionHandler(BookNotFoundException.class)
     public String bookNotFoundAdvice(BookNotFoundException exception){
         return exception.getMessage();
     }
-
     @ExceptionHandler(AuthorNotFoundException.class)
     public String authorNotFoundAdvice(AuthorNotFoundException exception){
         return exception.getMessage();
     }
     @ExceptionHandler(ConfirmationTokenNotFound.class)
-    public String confirmationTokenNotFound(ConfirmationTokenNotFound exception){return exception.getMessage();}
+    public String confirmationTokenNotFoundAdvice(ConfirmationTokenNotFound exception){return exception.getMessage();}
+    @ExceptionHandler(UserNotFoundException.class)
+    public String userNotFoundAdvice(UserNotFoundException exception) {return exception.getMessage();}
 }
