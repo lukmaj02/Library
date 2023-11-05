@@ -23,7 +23,7 @@ public class AppConfig {
         return new ModelMapper();
     }
 
-    @Bean
+    /*@Bean
     public CommandLineRunner commandLineRunner(RegistrationService registrationService,
                                                UserService userService,
                                                BookService bookService){
@@ -111,5 +111,5 @@ public class AppConfig {
             bookService.addBook(BookMapper.map(book2));
             bookService.addBook(BookMapper.map(book3));
         };
-      }
+      }*/
 }

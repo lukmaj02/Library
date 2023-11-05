@@ -6,6 +6,7 @@ import lombok.*;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
+import javax.annotation.Nullable;
 import java.time.LocalDateTime;
 @Getter
 @Setter
@@ -20,7 +21,9 @@ public class ConfirmationToken {
     private LocalDateTime createdAt;
     @Column(nullable = false)
     private LocalDateTime expiredAt;
-    private LocalDateTime confirmedAt;
+    private boolean confirmed = false;
+    @Enumerated(EnumType.STRING)
+    private TokenCategory category;
 
     @ManyToOne
     @JoinColumn(
@@ -29,10 +32,15 @@ public class ConfirmationToken {
     )
     private User user;
 
-    public ConfirmationToken(String token, LocalDateTime createdAt, LocalDateTime expiredAt, User user) {
+    public ConfirmationToken(String token,
+                             LocalDateTime createdAt,
+                             LocalDateTime expiredAt,
+                             User user,
+                             TokenCategory category) {
         this.token = token;
         this.createdAt = createdAt;
         this.expiredAt = expiredAt;
         this.user = user;
+        this.category = category;
     }
 }
