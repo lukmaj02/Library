@@ -41,9 +41,11 @@ public class WebSecurityConfig {
         http
                 .csrf().disable()
                 .authorizeHttpRequests((authz) -> authz
+                        .requestMatchers("/forgotPassword", "/changePassword")
+                        .permitAll()
                         .requestMatchers(HttpMethod.GET, "/book", "/author", "/book/**", "/author/**")
                         .permitAll()
-                        .requestMatchers("/registration", "/registration/confirm")
+                        .requestMatchers("/registration", "/confirm")
                         .permitAll()
                         .anyRequest().authenticated()
                 )

@@ -1,7 +1,5 @@
 package com.biblioteka.Library.Controller;
 
-import com.biblioteka.Library.Entity.User;
-import com.biblioteka.Library.Security.config.AppRoles;
 import com.biblioteka.Library.Service.RegistrationService;
 import com.biblioteka.Library.dto.RegistrationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController()
-@RequestMapping("/registration")
+@RequestMapping("")
 public class RegistrationController {
 
     private final RegistrationService registrationService;
@@ -19,13 +17,13 @@ public class RegistrationController {
         this.registrationService = registrationService;
     }
 
-    @PostMapping("")
+    @PostMapping("/registration")
     @ResponseStatus(HttpStatus.CREATED)
     public void register(@RequestBody RegistrationRequest registrationRequest){
         registrationService.register(registrationRequest);
     }
 
-    @PostMapping("/admin-mode")
+    @PostMapping("/registration/admin-mode")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ADMIN')")
     public void registerEmployeeOrAdmin(@RequestBody RegistrationRequest registrationRequest, @RequestParam("role") String role){
@@ -36,5 +34,18 @@ public class RegistrationController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void confirm(@RequestParam("token") String token){
         registrationService.confirmToken(token);
+    }
+
+    @GetMapping("/forgotPassword")
+    @ResponseStatus(HttpStatus.OK)
+    public void forgotPassword(@RequestParam("username") String username){
+        registrationService.generateTokenForUserForgotPassword(username);
+    }
+    @PutMapping("/changePassword")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void changePassword(@RequestParam("username") String username,
+                               @RequestParam("token") String token,
+                               @RequestBody String password){
+        registrationService.changePassword(token, username, password);
     }
 }
