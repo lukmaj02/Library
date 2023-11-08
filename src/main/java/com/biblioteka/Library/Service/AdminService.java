@@ -18,20 +18,17 @@ public class AdminService {
         this.userRepository = userRepository;
     }
 
-    public List<User> getEmployees(){
+    public List<User> getUsers(){
         return userRepository.findAll();
     }
 
-    public User getEmployeeById(UUID id){
+    public User getUserById(UUID id){
         return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
     }
-
-
     public void deleteEmployee(UUID id) {
         var employee = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
         userRepository.delete(employee);
     }
-
     public List<User> getUsersByName(String name){
         return userRepository.findByName(name);
     }

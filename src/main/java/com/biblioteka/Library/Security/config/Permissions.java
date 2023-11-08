@@ -1,12 +1,10 @@
 package com.biblioteka.Library.Security.config;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @RequiredArgsConstructor
-public enum Permission {
+public enum Permissions {
     ADMIN_READ("admin:read"),
     ADMIN_CREATE("admin:create"),
     ADMIN_UPDATE("admin:update"),

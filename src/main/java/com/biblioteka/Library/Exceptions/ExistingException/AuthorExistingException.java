@@ -1,6 +1,6 @@
 package com.biblioteka.Library.Exceptions.ExistingException;
 
-import com.biblioteka.Library.dto.AuthorDto;
+import com.biblioteka.Library.DTO.AuthorDto;
 
 public class AuthorExistingException extends RuntimeException {
     public AuthorExistingException(){

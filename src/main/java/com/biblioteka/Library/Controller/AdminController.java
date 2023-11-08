@@ -1,8 +1,8 @@
 package com.biblioteka.Library.Controller;
 
 import com.biblioteka.Library.Service.AdminService;
-import com.biblioteka.Library.dto.Mapper.UserMapper;
-import com.biblioteka.Library.dto.UserDto;
+import com.biblioteka.Library.DTO.Mapper.UserMapper;
+import com.biblioteka.Library.DTO.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,17 +24,17 @@ public class AdminController {
     }
 
     @GetMapping("")
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     public List<UserDto> getAll() {
-        return adminService.getEmployees()
+        return adminService.getUsers()
                 .stream()
                 .map(UserMapper::map)
                 .toList();
     }
     @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     public UserDto getById(@PathVariable UUID id){
-        return UserMapper.map(adminService.getEmployeeById(id));
+        return UserMapper.map(adminService.getUserById(id));
     }
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
@@ -43,7 +43,7 @@ public class AdminController {
     }
 
     @GetMapping("name")
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     public List<UserDto> getByName(@RequestParam("name") String name) {
         return adminService.getUsersByName(name)
                 .stream()

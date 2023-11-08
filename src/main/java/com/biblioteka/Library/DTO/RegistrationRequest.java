@@ -1,6 +1,5 @@
-package com.biblioteka.Library.dto;
+package com.biblioteka.Library.DTO;
 
-import com.biblioteka.Library.Security.config.AppRoles;
 import lombok.*;
 
 import java.time.LocalDate;

@@ -1,11 +1,11 @@
-package com.biblioteka.Library.dto.Mapper;
+package com.biblioteka.Library.DTO.Mapper;
 
 import com.biblioteka.Library.Entity.Author;
 import com.biblioteka.Library.Entity.Book;
 import com.biblioteka.Library.Entity.UserBooks;
-import com.biblioteka.Library.dto.AuthorDto;
-import com.biblioteka.Library.dto.BookDto;
-import com.biblioteka.Library.dto.UserBookDto;
+import com.biblioteka.Library.DTO.AuthorDto;
+import com.biblioteka.Library.DTO.BookDto;
+import com.biblioteka.Library.DTO.UserBookDto;
 
 public final class BookMapper {
     private BookMapper() {}

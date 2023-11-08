@@ -1,10 +1,8 @@
-package com.biblioteka.Library.dto.Mapper;
+package com.biblioteka.Library.DTO.Mapper;
 
 import com.biblioteka.Library.Entity.User;
-import com.biblioteka.Library.dto.RegistrationRequest;
-import com.biblioteka.Library.dto.UserDto;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import com.biblioteka.Library.DTO.RegistrationRequest;
+import com.biblioteka.Library.DTO.UserDto;
 
 public final class UserMapper {
 

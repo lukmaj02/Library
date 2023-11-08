@@ -1,14 +1,10 @@
 package com.biblioteka.Library.Service;
 
 import com.biblioteka.Library.Entity.Author;
-import com.biblioteka.Library.Exceptions.ExistingException.AuthorExistingBooksException;
-import com.biblioteka.Library.Exceptions.ExistingException.AuthorExistingException;
 import com.biblioteka.Library.Exceptions.NotFoundException.AuthorNotFoundException;
 import com.biblioteka.Library.Repository.AuthorRepository;
-import com.biblioteka.Library.dto.AuthorDto;
-import org.modelmapper.ModelMapper;
+import com.biblioteka.Library.DTO.AuthorDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,21 +40,9 @@ public class AuthorService {
     }
 
     public void changeById(Integer id, AuthorDto authorDto) {
-//       try{
-//           Author changedAuthor = getAuthorById(id);
-//           changedAuthor.setFirstName(authorDto.getFirstName());
-//           changedAuthor.setLastName(authorDto.getLastName());
-//       }
-//       catch(AuthorNotFoundException ignored){}
-    }
-
-    public void deleteById(Integer id) {
-//        if (!author.getBooks().isEmpty()) throw new AuthorExistingBooksException(modelMapper.map(author, AuthorDto.class));
-//        authorRepository.delete(author);
-//
-//        try{
-//            var author = getAuthorById(id);
-//        }
-//        catch(AuthorNotFoundException ignored){}
+       var author = authorRepository.findById(id).orElseThrow(()-> new AuthorNotFoundException(id));
+       author.setFirstName(authorDto.getFirstName());
+       author.setLastName(authorDto.getLastName());
+       authorRepository.save(author);
     }
 }

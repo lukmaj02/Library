@@ -56,8 +56,4 @@ public class UserBooksService {
                 .build()
         );
     }
-
-//    public UserBooks getUserBooksWithAuthor(Author author, String surname){
-//
-//    }
 }

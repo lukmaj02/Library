@@ -1,19 +1,22 @@
 package com.biblioteka.Library;
 
+import com.biblioteka.Library.DTO.AuthorDto;
+import com.biblioteka.Library.DTO.BookDto;
+import com.biblioteka.Library.DTO.Mapper.BookMapper;
+import com.biblioteka.Library.DTO.RegistrationRequest;
+import com.biblioteka.Library.Security.config.AppRoles;
 import com.biblioteka.Library.Service.BookService;
 import com.biblioteka.Library.Service.RegistrationService;
 import com.biblioteka.Library.Service.UserService;
-import com.biblioteka.Library.dto.*;
-import com.biblioteka.Library.dto.Mapper.BookMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 
-import java.awt.print.Book;
 import java.time.LocalDate;
-
-import static com.biblioteka.Library.Security.config.AppRoles.*;
+import java.util.Properties;
 
 
 @Configuration
@@ -23,10 +26,27 @@ public class AppConfig {
         return new ModelMapper();
     }
 
-    /*@Bean
+    @Bean
+    public JavaMailSender getJavaMailSender() {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setPort(587);
+        mailSender.setUsername("lmajcher02@gmail.com");
+        mailSender.setPassword("gtii xkuh eoeq iidp");
+        Properties props = mailSender.getJavaMailProperties();
+        props.put("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.debug", "true");
+
+        return mailSender;
+    }
+
+    @Bean
     public CommandLineRunner commandLineRunner(RegistrationService registrationService,
                                                UserService userService,
                                                BookService bookService){
+        if(userService.userExistsByUsername("admin@admin.com")) return null;
         return args ->{
             var admin = RegistrationRequest.builder()
                     .name("admin")
@@ -97,10 +117,10 @@ public class AppConfig {
                     .quantity(7)
                     .build();
 
-            registrationService.registerEmployeeOrAdmin(admin,"ADMIN");
-            registrationService.registerEmployeeOrAdmin(employee, "EMPLOYEE");
-            registrationService.register(user);
-            registrationService.register(user1);
+            registrationService.register(admin, AppRoles.ADMIN);
+            registrationService.register(employee, AppRoles.EMPLOYEE);
+            registrationService.register(user, AppRoles.USER);
+            registrationService.register(user1, AppRoles.USER);
 
             userService.enableUser(employee.getUsername());
             userService.enableUser(user.getUsername());
@@ -111,5 +131,5 @@ public class AppConfig {
             bookService.addBook(BookMapper.map(book2));
             bookService.addBook(BookMapper.map(book3));
         };
-      }*/
+      }
 }

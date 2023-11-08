@@ -1,11 +1,10 @@
 package com.biblioteka.Library.Security.config;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import static com.biblioteka.Library.Security.config.Permission.*;
+import static com.biblioteka.Library.Security.config.Permissions.*;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -36,12 +35,12 @@ public enum AppRoles {
     ));
 
     @Getter
-    private final Set<Permission> permissions;
+    private final Set<Permissions> permissions;
 
     public Set<SimpleGrantedAuthority> getAuthorities(){
         var authorities =  getPermissions()
                 .stream()
-                .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
+                .map(permissions -> new SimpleGrantedAuthority(permissions.getPermission()))
                 .collect(Collectors.toSet());
         authorities.add(new SimpleGrantedAuthority("ROLE_" + this.name()));
         return authorities;

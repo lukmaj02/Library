@@ -1,5 +1,5 @@
 package com.biblioteka.Library.Token;
 
 public enum TokenCategory {
-    CREATION, PASSWORD
+    REGISTRATION, PASSWORD_RESET
 }

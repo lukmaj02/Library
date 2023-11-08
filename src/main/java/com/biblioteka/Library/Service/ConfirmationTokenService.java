@@ -24,15 +24,16 @@ public class ConfirmationTokenService {
         return confirmationTokenRepository.findByToken(token).orElseThrow(ConfirmationTokenNotFound::new);
     }
 
-    public void generateTokenForUser(User user, TokenCategory tokenCategory){
+    public ConfirmationToken generateTokenForUser(User user, TokenCategory tokenCategory){
         ConfirmationToken confirmationToken = new ConfirmationToken(
                 UUID.randomUUID().toString(),
                 LocalDateTime.now(),
-                LocalDateTime.now().plusMinutes(5),
+                LocalDateTime.now().plusMinutes(15),
                 user,
                 tokenCategory
         );
         confirmationTokenRepository.save(confirmationToken);
+        return confirmationToken;
     }
 
     public void saveConfirmation(ConfirmationToken confirmationToken){

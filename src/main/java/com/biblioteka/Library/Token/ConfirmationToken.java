@@ -13,14 +13,15 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 public class ConfirmationToken {
-    @GeneratedValue
     @Id
-    private Long id;
     private String token;
-    @Column(nullable = false)
+    @Column(name = "created_at",
+            nullable = false)
     private LocalDateTime createdAt;
-    @Column(nullable = false)
+    @Column(name = "expires_at",
+            nullable = false)
     private LocalDateTime expiredAt;
+    @Column(name = "confirmation_status")
     private boolean confirmed = false;
     @Enumerated(EnumType.STRING)
     private TokenCategory category;

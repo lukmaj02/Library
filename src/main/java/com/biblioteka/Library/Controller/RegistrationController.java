@@ -1,7 +1,10 @@
 package com.biblioteka.Library.Controller;
 
+import com.biblioteka.Library.Security.config.AppRoles;
 import com.biblioteka.Library.Service.RegistrationService;
-import com.biblioteka.Library.dto.RegistrationRequest;
+import com.biblioteka.Library.DTO.RegistrationRequest;
+import com.biblioteka.Library.DTO.ResetPasswordDto;
+import com.biblioteka.Library.Token.TokenCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,33 +22,40 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     @ResponseStatus(HttpStatus.CREATED)
-    public void register(@RequestBody RegistrationRequest registrationRequest){
-        registrationService.register(registrationRequest);
+    public String register(@RequestBody RegistrationRequest registrationRequest){
+        return registrationService.register(registrationRequest, AppRoles.USER);
     }
 
     @PostMapping("/registration/admin-mode")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ADMIN')")
-    public void registerEmployeeOrAdmin(@RequestBody RegistrationRequest registrationRequest, @RequestParam("role") String role){
-        registrationService.registerEmployeeOrAdmin(registrationRequest, role);
+    public String registerEmployeeOrAdmin(@RequestBody RegistrationRequest registrationRequest, @RequestParam("role") String role){
+        return registrationService.register(registrationRequest, AppRoles.valueOf(role));
     }
 
     @GetMapping("/confirm")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void confirm(@RequestParam("token") String token){
-        registrationService.confirmToken(token);
+    public String confirm(@RequestParam("token") String token){
+        return registrationService.confirmToken(token);
     }
 
-    @GetMapping("/forgotPassword")
+    @PutMapping("/password-reset")
     @ResponseStatus(HttpStatus.OK)
     public void forgotPassword(@RequestParam("username") String username){
         registrationService.generateTokenForUserForgotPassword(username);
     }
-    @PutMapping("/changePassword")
+
+    @GetMapping("/password-set")
+    @ResponseStatus(HttpStatus.OK)
+    public void acceptChangePassword(@RequestParam("username") String username,
+                                     @RequestParam("token") String token){
+        registrationService.confirmToken(token);
+    }
+    @PutMapping("/password-set")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void changePassword(@RequestParam("username") String username,
+    public String changePassword(@RequestParam("username") String username,
                                @RequestParam("token") String token,
-                               @RequestBody String password){
-        registrationService.changePassword(token, username, password);
+                               @RequestBody ResetPasswordDto password){
+        return registrationService.changePassword(token, password, username);
     }
 }
