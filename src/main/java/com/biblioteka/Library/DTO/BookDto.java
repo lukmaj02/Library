@@ -1,7 +1,6 @@
-package com.biblioteka.Library.dto;
+package com.biblioteka.Library.DTO;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 

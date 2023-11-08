@@ -2,14 +2,10 @@ package com.biblioteka.Library.Service;
 
 import com.biblioteka.Library.Entity.Author;
 import com.biblioteka.Library.Entity.Book;
-import com.biblioteka.Library.Exceptions.ExistingException.AuthorExistingException;
 import com.biblioteka.Library.Exceptions.ExistingException.BookExistingException;
 import com.biblioteka.Library.Exceptions.BookForbiddenToBorrowException;
-import com.biblioteka.Library.Exceptions.NotFoundException.AuthorNotFoundException;
 import com.biblioteka.Library.Exceptions.NotFoundException.BookNotFoundException;
 import com.biblioteka.Library.Repository.BookRepository;
-import com.biblioteka.Library.dto.BookDto;
-import com.biblioteka.Library.dto.Mapper.BookMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,16 +57,12 @@ public class BookService {
         book.setQuantity(quantity);
         bookRepository.save(book);
     }
-
     public void deleteBook(Integer id) {
         var book = getBookById(id);
         bookRepository.delete(book);
     }
-
     public boolean bookExists(String isbn, String title){
         return bookRepository.existsByIsbnOrTitle(isbn, title);
     }
-    public boolean possibleToBorrow(Book book){
-        return book.getQuantity() > 0;
-    }
+
 }

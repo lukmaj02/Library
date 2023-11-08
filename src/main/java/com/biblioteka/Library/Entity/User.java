@@ -1,17 +1,13 @@
 package com.biblioteka.Library.Entity;
 
 import com.biblioteka.Library.Security.config.AppRoles;
-import com.biblioteka.Library.Security.config.Permission;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import com.biblioteka.Library.Security.config.Permission.*;
 
 import java.time.LocalDate;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
