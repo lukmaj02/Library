@@ -35,29 +35,11 @@ public class BookController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     public BookDto getById(@PathVariable Integer id) {
         return BookMapper.map(bookService.getBookById(id));
     }
 
 
-    @PostMapping("")
-    @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
-    public void add(@RequestBody BookDto bookDto) {
-        bookService.addBook(BookMapper.map(bookDto));
-    }
 
-    @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
-    public void changeQuantityById(@PathVariable Integer id, @RequestParam("quantity") Integer quantity) {
-        bookService.changeBookQuantity(id, quantity);
-    }
-
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_EMPLOYEE')")
-    public void deleteById(@PathVariable Integer id) {bookService.deleteBook(id);
-    }
 }

@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 @Repository
 @Transactional(readOnly = true)
-public interface UserBooksRepository extends JpaRepository<UserBooks, Integer> {
+public interface UserBooksRepository extends JpaRepository<UserBooks, String> {
     Optional<UserBooks> findByUserAndBook(User user, Book book);
-    boolean existsByUserAndBook(User user, Book book);
 }

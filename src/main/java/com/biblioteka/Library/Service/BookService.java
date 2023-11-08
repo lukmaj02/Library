@@ -32,18 +32,17 @@ public class BookService {
         return bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
     }
 
-    public Book borrowBookById(Integer bookId){
-        var book = getBookById(bookId);
+    public void returnBook(Book book){
+        book.setQuantity(book.getQuantity()+1);
+        bookRepository.save(book);
+    }
+
+    public Book reserveBook(Integer bookId){
+        var book = bookRepository.findById(bookId).orElseThrow(BookExistingException::new);
         if(book.getQuantity()<=0) throw new BookForbiddenToBorrowException();
         book.setQuantity(book.getQuantity()-1);
         bookRepository.save(book);
         return book;
-    }
-
-    public void returnBookById(Integer bookId){
-        var book = getBookById(bookId);
-        book.setQuantity(book.getQuantity()+1);
-        bookRepository.save(book);
     }
 
     @Transactional

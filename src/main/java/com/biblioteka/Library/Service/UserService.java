@@ -11,6 +11,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 @Service
 public class UserService implements UserDetailsService {
 
@@ -40,7 +42,6 @@ public class UserService implements UserDetailsService {
         return userRepository.existsByUsername(username);
     }
 
-    @Transactional
     public void createUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);

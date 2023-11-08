@@ -31,6 +31,9 @@ public class Book {
     private Integer quantity;
     @Column(name = "book_isbn")
     private String isbn;
+    @Column(name = "type")
+    @Enumerated(EnumType.STRING)
+    private BookTypes type;
 
     @ManyToOne
     @JoinColumn(name = "author_id", referencedColumnName = "id")

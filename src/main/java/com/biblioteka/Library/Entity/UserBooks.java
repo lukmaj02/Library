@@ -2,9 +2,12 @@ package com.biblioteka.Library.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.*;
+import org.springframework.cglib.core.Local;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -16,9 +19,8 @@ import java.time.LocalDateTime;
 @Table(name = "user_books")
 public class UserBooks {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", length = 6)
     private Integer id;
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore
@@ -28,11 +30,9 @@ public class UserBooks {
     @JoinColumn(name = "book_id")
     @JsonIgnore
     private Book book;
-
-    @Column(nullable = false)
-    private LocalDateTime borrowDate;
-    @Column(nullable = false)
-    private LocalDateTime expireDate;
-    private LocalDateTime returnDate;
+    private LocalDate reservedDate;
+    private LocalDate borrowDate;
+    private LocalDate expireDate;
+    private LocalDate returnDate;
 
 }

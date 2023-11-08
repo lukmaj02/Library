@@ -4,6 +4,7 @@ import com.biblioteka.Library.DTO.AuthorDto;
 import com.biblioteka.Library.DTO.BookDto;
 import com.biblioteka.Library.DTO.Mapper.BookMapper;
 import com.biblioteka.Library.DTO.RegistrationRequest;
+import com.biblioteka.Library.Entity.BookTypes;
 import com.biblioteka.Library.Security.config.AppRoles;
 import com.biblioteka.Library.Service.BookService;
 import com.biblioteka.Library.Service.RegistrationService;
@@ -17,6 +18,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.time.LocalDate;
 import java.util.Properties;
+import java.util.Random;
 
 
 @Configuration
@@ -24,6 +26,11 @@ public class AppConfig {
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
+    }
+
+    @Bean
+    public Random random(){
+        return new Random();
     }
 
     @Bean
@@ -42,6 +49,7 @@ public class AppConfig {
         return mailSender;
     }
 
+    //for testing
     @Bean
     public CommandLineRunner commandLineRunner(RegistrationService registrationService,
                                                UserService userService,
@@ -96,6 +104,7 @@ public class AppConfig {
                     .author(author)
                     .quantity(10)
                     .publicationDate(1990)
+                    .type(BookTypes.FANTASY.toString())
                     .build();
 
             var book2 = BookDto.builder()
@@ -104,6 +113,7 @@ public class AppConfig {
                     .author(author)
                     .quantity(15)
                     .publicationDate(1994)
+                    .type(BookTypes.FANTASY.toString())
                     .build();
 
             var book3 = BookDto.builder()
@@ -115,6 +125,7 @@ public class AppConfig {
                             .lastName("Tolkien")
                             .build())
                     .quantity(7)
+                    .type(BookTypes.FANTASY.toString())
                     .build();
 
             registrationService.register(admin, AppRoles.ADMIN);
