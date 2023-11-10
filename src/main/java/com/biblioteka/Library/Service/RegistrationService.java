@@ -1,6 +1,6 @@
 package com.biblioteka.Library.Service;
 
-import com.biblioteka.Library.Entity.User;
+import com.biblioteka.Library.Model.User;
 import com.biblioteka.Library.Exceptions.ConfirmationTokenExpired;
 import com.biblioteka.Library.Exceptions.ExistingException.EmailAlreadyExistsException;
 import com.biblioteka.Library.Exceptions.InvalidPasswordException;
@@ -12,6 +12,7 @@ import com.biblioteka.Library.DTO.RegistrationRequest;
 import com.biblioteka.Library.DTO.ResetPasswordDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -30,11 +31,9 @@ public class RegistrationService {
         this.emailSenderService = emailSenderService;
     }
 
+    @Transactional
     public String register(RegistrationRequest registrationRequest, AppRoles role) {
-        if(userService.userExistsByUsername(registrationRequest.getUsername())) throw new EmailAlreadyExistsException();
-        var user = UserMapper.map(registrationRequest);
-        user.setRole(role);
-        userService.createUser(user);
+        var user = userService.createUser(registrationRequest, role);
         var token = confirmationTokenService.generateTokenForUser(user,TokenCategory.REGISTRATION);
         emailSenderService.sendMail(TokenCategory.REGISTRATION.toString(), CONFIRMATION_PATH + token.getToken(), user.getUsername());
         return "REGISTERED!";

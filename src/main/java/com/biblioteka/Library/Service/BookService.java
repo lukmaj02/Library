@@ -1,7 +1,6 @@
 package com.biblioteka.Library.Service;
 
-import com.biblioteka.Library.Entity.Author;
-import com.biblioteka.Library.Entity.Book;
+import com.biblioteka.Library.Model.Book;
 import com.biblioteka.Library.Exceptions.ExistingException.BookExistingException;
 import com.biblioteka.Library.Exceptions.BookForbiddenToBorrowException;
 import com.biblioteka.Library.Exceptions.NotFoundException.BookNotFoundException;

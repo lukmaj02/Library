@@ -1,13 +1,12 @@
 package com.biblioteka.Library.Controller;
 
-import com.biblioteka.Library.Entity.User;
+import com.biblioteka.Library.Model.User;
 import com.biblioteka.Library.Service.UserBooksService;
 import com.biblioteka.Library.Service.UserService;
 import com.biblioteka.Library.DTO.BookDto;
 import com.biblioteka.Library.DTO.Mapper.BookMapper;
 import com.biblioteka.Library.DTO.Mapper.UserMapper;
 import com.biblioteka.Library.DTO.UserDto;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,12 +1,9 @@
 package com.biblioteka.Library.Token;
 
-import com.biblioteka.Library.Entity.User;
+import com.biblioteka.Library.Model.User;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
-import javax.annotation.Nullable;
 import java.time.LocalDateTime;
 @Getter
 @Setter

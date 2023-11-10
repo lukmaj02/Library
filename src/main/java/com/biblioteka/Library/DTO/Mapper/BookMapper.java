@@ -1,9 +1,9 @@
 package com.biblioteka.Library.DTO.Mapper;
 
-import com.biblioteka.Library.Entity.Author;
-import com.biblioteka.Library.Entity.Book;
-import com.biblioteka.Library.Entity.BookTypes;
-import com.biblioteka.Library.Entity.UserBooks;
+import com.biblioteka.Library.Model.Author;
+import com.biblioteka.Library.Model.Book;
+import com.biblioteka.Library.Model.BookTypes;
+import com.biblioteka.Library.Model.UserBooks;
 import com.biblioteka.Library.DTO.AuthorDto;
 import com.biblioteka.Library.DTO.BookDto;
 import com.biblioteka.Library.DTO.UserBookDto;

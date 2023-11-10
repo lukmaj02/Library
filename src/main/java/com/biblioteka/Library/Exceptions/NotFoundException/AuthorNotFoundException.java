@@ -1,8 +1,6 @@
 package com.biblioteka.Library.Exceptions.NotFoundException;
 
-import com.biblioteka.Library.Entity.Author;
-import com.biblioteka.Library.Entity.Book;
-import jakarta.persistence.criteria.CriteriaBuilder;
+import com.biblioteka.Library.Model.Book;
 
 public class AuthorNotFoundException extends RuntimeException {
     public AuthorNotFoundException(){

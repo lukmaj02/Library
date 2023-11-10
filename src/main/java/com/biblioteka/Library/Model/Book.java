@@ -1,15 +1,11 @@
-package com.biblioteka.Library.Entity;
+package com.biblioteka.Library.Model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Cascade;
-import org.springframework.cache.annotation.CacheConfig;
 
 import java.util.Set;
 
-import static jakarta.persistence.CascadeType.*;
 
 @Getter
 @Setter

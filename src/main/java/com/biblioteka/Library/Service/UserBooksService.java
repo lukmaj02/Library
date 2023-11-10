@@ -1,7 +1,7 @@
 package com.biblioteka.Library.Service;
 
-import com.biblioteka.Library.Entity.User;
-import com.biblioteka.Library.Entity.UserBooks;
+import com.biblioteka.Library.Model.User;
+import com.biblioteka.Library.Model.UserBooks;
 import com.biblioteka.Library.Exceptions.NotFoundException.BookNotFoundException;
 import com.biblioteka.Library.Exceptions.NotFoundException.UserBookTokenNotFoundException;
 import com.biblioteka.Library.Repository.UserBooksRepository;
@@ -64,7 +64,7 @@ public class UserBooksService {
         var user = (User) userService.loadUserByUsername(username);
         var book = bookService.reserveBook(bookId);
         var userBook = UserBooks.builder()
-                .id(100000 + random.nextInt(900000))
+                .id( 100000 + random.nextInt(900000))
                 .book(book)
                 .user(user)
                 .reservedDate(LocalDate.now())

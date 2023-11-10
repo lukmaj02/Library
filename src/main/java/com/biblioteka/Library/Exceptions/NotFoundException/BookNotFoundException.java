@@ -1,7 +1,7 @@
 package com.biblioteka.Library.Exceptions.NotFoundException;
 
-import com.biblioteka.Library.Entity.Author;
-import com.biblioteka.Library.Entity.User;
+import com.biblioteka.Library.Model.Author;
+import com.biblioteka.Library.Model.User;
 
 public class BookNotFoundException extends RuntimeException{
     public BookNotFoundException(){

@@ -1,6 +1,6 @@
 package com.biblioteka.Library.Controller;
 
-import com.biblioteka.Library.Entity.Author;
+import com.biblioteka.Library.Model.Author;
 import com.biblioteka.Library.Service.AuthorService;
 import com.biblioteka.Library.DTO.AuthorDto;
 import org.springframework.beans.factory.annotation.Autowired;

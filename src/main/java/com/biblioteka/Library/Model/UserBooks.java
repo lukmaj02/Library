@@ -1,14 +1,11 @@
-package com.biblioteka.Library.Entity;
+package com.biblioteka.Library.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import lombok.*;
-import org.springframework.cglib.core.Local;
-import org.springframework.web.bind.annotation.GetMapping;
 
+import lombok.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 
 @Getter
 @Setter

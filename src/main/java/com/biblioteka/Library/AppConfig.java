@@ -4,7 +4,7 @@ import com.biblioteka.Library.DTO.AuthorDto;
 import com.biblioteka.Library.DTO.BookDto;
 import com.biblioteka.Library.DTO.Mapper.BookMapper;
 import com.biblioteka.Library.DTO.RegistrationRequest;
-import com.biblioteka.Library.Entity.BookTypes;
+import com.biblioteka.Library.Model.BookTypes;
 import com.biblioteka.Library.Security.config.AppRoles;
 import com.biblioteka.Library.Service.BookService;
 import com.biblioteka.Library.Service.RegistrationService;
