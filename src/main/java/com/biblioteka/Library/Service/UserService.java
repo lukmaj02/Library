@@ -44,6 +44,7 @@ public class UserService implements UserDetailsService {
         if(userRepository.existsByUsername(request.getUsername())) throw new EmailAlreadyExistsException();
         var user = UserMapper.map(request);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setRole(role);
         userRepository.save(user);
         return user;
     }
@@ -53,7 +54,8 @@ public class UserService implements UserDetailsService {
     }
 
     public void changePassword(String username, String password){
-        var user = (User) loadUserByUsername(username);
+        var user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("username not found"));
         user.setPassword(bCryptPasswordEncoder.encode(password));
         userRepository.save(user);
     }
