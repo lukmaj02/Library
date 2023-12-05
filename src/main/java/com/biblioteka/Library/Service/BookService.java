@@ -46,7 +46,7 @@ public class BookService {
 
     @Transactional
     public void addBook(Book book) {
-        if(bookExists(book.getIsbn(), book.getTitle())) throw new BookExistingException();
+        if(bookRepository.existsByIsbnOrTitle(book.getIsbn(), book.getTitle())) throw new BookExistingException();
         book.setAuthor(authorService.getAuthorIfNotExistsAdd(book.getAuthor()));
         bookRepository.save(book);
     }
@@ -59,8 +59,4 @@ public class BookService {
         var book = getBookById(id);
         bookRepository.delete(book);
     }
-    public boolean bookExists(String isbn, String title){
-        return bookRepository.existsByIsbnOrTitle(isbn, title);
-    }
-
 }

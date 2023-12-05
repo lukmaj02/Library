@@ -35,27 +35,20 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("not Found"));
     }
-
-    public boolean userExistsByUsername(String username){
-        return userRepository.existsByUsername(username);
-    }
-
     public User createUser(RegistrationRequest request, AppRoles role) {
         if(userRepository.existsByUsername(request.getUsername())) throw new EmailAlreadyExistsException();
         var user = UserMapper.map(request);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setRole(role);
         userRepository.save(user);
         return user;
     }
-
     public void enableUser(String username){
         userRepository.enableUser(username);
     }
-
     public void changePassword(String username, String password){
-        var user = (User) loadUserByUsername(username);
+        var user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("not found"));
         user.setPassword(bCryptPasswordEncoder.encode(password));
         userRepository.save(user);
     }
-
 }
