@@ -47,7 +47,8 @@ public class UserService implements UserDetailsService {
         userRepository.enableUser(username);
     }
     public void changePassword(String username, String password){
-        var user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("not found"));
+        var user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("username not found"));
         user.setPassword(bCryptPasswordEncoder.encode(password));
         userRepository.save(user);
     }

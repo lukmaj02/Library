@@ -10,8 +10,6 @@ import static com.biblioteka.Library.AppConfig.EMAIL;
 public class EmailSenderService{
 
     private final JavaMailSender mailSender;
-
-
     @Autowired
     public EmailSenderService(JavaMailSender mailSender) {
         this.mailSender = mailSender;
