@@ -35,7 +35,7 @@ public class BookController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     public BookDto getById(@PathVariable Integer id) {
         return BookMapper.map(bookService.getBookById(id));
     }

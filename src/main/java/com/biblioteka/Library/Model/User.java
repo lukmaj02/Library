@@ -1,4 +1,4 @@
-package com.biblioteka.Library.Entity;
+package com.biblioteka.Library.Model;
 
 import com.biblioteka.Library.Security.config.AppRoles;
 import jakarta.persistence.*;

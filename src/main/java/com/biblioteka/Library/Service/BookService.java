@@ -1,7 +1,7 @@
 package com.biblioteka.Library.Service;
 
-import com.biblioteka.Library.Entity.Author;
-import com.biblioteka.Library.Entity.Book;
+
+import com.biblioteka.Library.Model.Book;
 import com.biblioteka.Library.Exceptions.ExistingException.BookExistingException;
 import com.biblioteka.Library.Exceptions.BookForbiddenToBorrowException;
 import com.biblioteka.Library.Exceptions.NotFoundException.BookNotFoundException;
@@ -32,6 +32,7 @@ public class BookService {
         return bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
     }
 
+
     public Book borrowBookById(Integer bookId){
         var book = getBookById(bookId);
         if(book.getQuantity()<=0) throw new BookForbiddenToBorrowException();
@@ -40,15 +41,30 @@ public class BookService {
         return book;
     }
 
-    public void returnBookById(Integer bookId){
+    public void returnBookById(Integer bookId) {
         var book = getBookById(bookId);
+        book.setQuantity(book.getQuantity() + 1);
+        bookRepository.save(book);
+    }
+
+    public void returnBook(Book book){
         book.setQuantity(book.getQuantity()+1);
         bookRepository.save(book);
     }
 
+    public Book reserveBook(Integer bookId){
+        var book = bookRepository.findById(bookId).orElseThrow(BookExistingException::new);
+        if(book.getQuantity()<=0) throw new BookForbiddenToBorrowException();
+        book.setQuantity(book.getQuantity()-1);
+        bookRepository.save(book);
+        return book;
+
+    }
+
     @Transactional
     public void addBook(Book book) {
-        if(bookExists(book.getIsbn(), book.getTitle())) throw new BookExistingException();
+
+        if(bookRepository.existsByIsbnOrTitle(book.getIsbn(), book.getTitle())) throw new BookExistingException();
         book.setAuthor(authorService.getAuthorIfNotExistsAdd(book.getAuthor()));
         bookRepository.save(book);
     }

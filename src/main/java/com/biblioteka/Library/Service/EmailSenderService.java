@@ -4,12 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import static com.biblioteka.Library.AppConfig.EMAIL;
+
 
 @Service
 public class EmailSenderService{
 
     private final JavaMailSender mailSender;
-    private final static String EMAIL= "lmajcher02@gmail.com";
 
     @Autowired
     public EmailSenderService(JavaMailSender mailSender) {

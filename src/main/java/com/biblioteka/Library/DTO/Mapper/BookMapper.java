@@ -1,8 +1,10 @@
 package com.biblioteka.Library.DTO.Mapper;
 
-import com.biblioteka.Library.Entity.Author;
-import com.biblioteka.Library.Entity.Book;
-import com.biblioteka.Library.Entity.UserBooks;
+
+import com.biblioteka.Library.Model.Author;
+import com.biblioteka.Library.Model.Book;
+import com.biblioteka.Library.Model.BookTypes;
+import com.biblioteka.Library.Model.UserBooks;
 import com.biblioteka.Library.DTO.AuthorDto;
 import com.biblioteka.Library.DTO.BookDto;
 import com.biblioteka.Library.DTO.UserBookDto;
@@ -18,6 +20,7 @@ public final class BookMapper {
                         .lastName(book.getBook().getAuthor().getLastName())
                         .build())
                 .publicationDate(book.getBook().getPublicationDate())
+                .type(book.getBook().getType().toString())
                 .borrowDate(book.getBorrowDate())
                 .expireDate(book.getExpireDate())
                 .returnDate(book.getReturnDate())
@@ -34,6 +37,7 @@ public final class BookMapper {
                         .lastName(book.getAuthor().getLastName())
                         .build())
                 .publicationDate(book.getPublicationDate())
+                .type(book.getType().toString())
                 .build();
     }
 
@@ -47,6 +51,7 @@ public final class BookMapper {
                         .firstName(bookDto.getAuthor().getFirstName())
                         .lastName(bookDto.getAuthor().getLastName())
                         .build())
+                .type(BookTypes.valueOf(bookDto.getType()))
                 .build();
     }
 }

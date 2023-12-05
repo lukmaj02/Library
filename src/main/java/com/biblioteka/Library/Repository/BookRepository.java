@@ -1,19 +1,16 @@
 package com.biblioteka.Library.Repository;
 
-import com.biblioteka.Library.Entity.Author;
-import com.biblioteka.Library.Entity.Book;
-import com.biblioteka.Library.Entity.User;
+
+import com.biblioteka.Library.Model.Author;
+import com.biblioteka.Library.Model.Book;
 import lombok.NonNull;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.util.Collection;
+import org.springframework.stereotype.Repository;
+
 import java.util.Optional;
 import java.util.Set;
+
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, Integer> {

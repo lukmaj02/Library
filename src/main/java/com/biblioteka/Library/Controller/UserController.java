@@ -1,6 +1,7 @@
 package com.biblioteka.Library.Controller;
 
-import com.biblioteka.Library.Entity.User;
+
+import com.biblioteka.Library.Model.User;
 import com.biblioteka.Library.Service.UserBooksService;
 import com.biblioteka.Library.Service.UserService;
 import com.biblioteka.Library.DTO.BookDto;
@@ -19,7 +20,8 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/profile")
-@PreAuthorize("hasRole('USER')")
+
+@PreAuthorize("hasRole('USER') or hasRole('EMPLOYEE')")
 public class UserController {
     private final UserBooksService userBooksService;
     private final UserService userService;
@@ -46,22 +48,18 @@ public class UserController {
         return BookMapper.map(userBooksService.getUserBookWithId(id,username));
     }
 
-    @PutMapping("/borrow")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public void borrowBook(@CurrentSecurityContext (expression = "authentication.name") String username,
-                           @PathParam("book_id") Integer bookId){
-        userBooksService.userBorrowsBook(bookId,username);
-    }
 
-    @PutMapping("/return")
-    @ResponseStatus(HttpStatus.OK)
-    public void returnBook(@CurrentSecurityContext(expression = "authentication.name") String username,
-                           @PathParam("book_id") Integer bookId){
-        userBooksService.userReturnsBook(bookId, username);
-    }
     @GetMapping("/settings")
     @ResponseStatus(HttpStatus.OK)
     public UserDto viewInformation(@CurrentSecurityContext(expression = "authentication.name") String username){
         return UserMapper.map((User) userService.loadUserByUsername(username));
     }
+
+    @PutMapping("/reserve")
+    @ResponseStatus(HttpStatus.OK)
+    public void reserveBook(@CurrentSecurityContext(expression = "authentication.name") String username,
+                            @PathParam("book_id") Integer book_id){
+        userBooksService.userReservesBook(book_id, username);
+    }
+
 }

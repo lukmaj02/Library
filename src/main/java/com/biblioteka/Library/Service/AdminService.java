@@ -1,6 +1,8 @@
 package com.biblioteka.Library.Service;
 
-import com.biblioteka.Library.Entity.User;
+
+import com.biblioteka.Library.Model.User;
+
 import com.biblioteka.Library.Exceptions.NotFoundException.UserNotFoundException;
 import com.biblioteka.Library.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,9 @@
 package com.biblioteka.Library.Service;
 
-import com.biblioteka.Library.Entity.User;
+
+
 import com.biblioteka.Library.Exceptions.NotFoundException.ConfirmationTokenNotFound;
+import com.biblioteka.Library.Model.User;
 import com.biblioteka.Library.Repository.ConfirmationTokenRepository;
 import com.biblioteka.Library.Token.ConfirmationToken;
 import com.biblioteka.Library.Token.TokenCategory;

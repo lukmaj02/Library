@@ -1,12 +1,9 @@
-package com.biblioteka.Library.Entity;
+package com.biblioteka.Library.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.databind.deser.std.UUIDDeserializer;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.Set;
-import java.util.UUID;
 
 @Getter
 @Setter

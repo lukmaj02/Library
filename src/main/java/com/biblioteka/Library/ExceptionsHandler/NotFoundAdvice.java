@@ -25,4 +25,10 @@ public class NotFoundAdvice {
     public String confirmationTokenNotFoundAdvice(ConfirmationTokenNotFound exception){return exception.getMessage();}
     @ExceptionHandler(UserNotFoundException.class)
     public String userNotFoundAdvice(UserNotFoundException exception) {return exception.getMessage();}
+
+    @ExceptionHandler(UserBookTokenNotFoundException.class)
+    public String userBookTokenNotFoundAdvice(UserBookTokenNotFoundException exception){
+        return exception.getMessage();
+    }
+
 }

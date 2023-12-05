@@ -15,4 +15,5 @@ public class BookDto {
     @JsonIgnore
     private Integer quantity;
     private AuthorDto author;
+    private String type;
 }

@@ -1,6 +1,6 @@
 package com.biblioteka.Library.DTO.Mapper;
 
-import com.biblioteka.Library.Entity.User;
+import com.biblioteka.Library.Model.User;
 import com.biblioteka.Library.DTO.RegistrationRequest;
 import com.biblioteka.Library.DTO.UserDto;
 
