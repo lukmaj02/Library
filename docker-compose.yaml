@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  mysqldb:
+    container_name: mysqldb
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=lukasz123
+      - MYSQL_DATABASE=biblioteka
+    ports:
+      - "3307:3306"
+  app:
+    container_name: library
+    depends_on:
+      - mysqldb
+    build: .
+    ports:
+      - "8081:8080"

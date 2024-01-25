@@ -1,11 +1,11 @@
 spring:
     datasource:
-        url: jdbc:mysql://localhost:3306/biblioteka
+        platform: mysql
+        url: jdbc:mysql://mysqldb:3306/biblioteka
         username: root
         password: lukasz123
     jpa:
-        properties:
-            hibernate:
-                ddl-auto: update
         database: MYSQL
+        hibernate:
+            ddl-auto: update
         show-sql: true
